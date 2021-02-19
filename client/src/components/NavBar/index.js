@@ -74,7 +74,7 @@ function Navbar({ toggle }) {
                 </NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinkZ to='/recipe'>Recipes</NavLinkZ>
+                <NavLinkZ to='/recipes'>Recipes</NavLinkZ>
               </NavItem>
               <NavItem>
                 <NavLinks
