@@ -50,8 +50,8 @@ function RecipesNav({ toggle }) {
             </RecMobileIcon>
             <RecNavMenu>
               <RecNavItem>
-                <RecNavLinks
-                  to='about'
+                <RecNavLinkZ
+                  to='/trial'
                   smooth={true}
                   duration={500}
                   spy={true}
@@ -59,7 +59,7 @@ function RecipesNav({ toggle }) {
                   offset={-80}
                 >
                   Message Board
-                </RecNavLinks>
+                </RecNavLinkZ>
               </RecNavItem>
               <RecNavItem>
                 <RecNavLinks

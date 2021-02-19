@@ -1,30 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const RecipesContainer = styled.div`
-  margin-top: 80px;
-  text-align: center;
+export const TableContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 24px 24px;
 `;
-
-export const ModalContainer = styled.div`
-  width: 100%;
-`;
-
-export const SpanModal = styled.span`
-  color: red;
-`;
-
-// export const TableContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin: 24px 24px;
-// `;
 
 export const TableRecipe = styled.table`
   border: 1px solid black;
@@ -44,7 +25,6 @@ export const THRecipe = styled.th`
 `;
 
 export const TDRecipe = styled.td`
-  white-space: pre-line;
   text-align: center;
   border: 1px solid black;
 `;
@@ -52,13 +32,10 @@ export const TDRecipe = styled.td`
 export const TDActions = styled.td`
   text-align: center;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 export const TDLinkView = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -76,7 +53,6 @@ export const TDLinkView = styled(Link)`
   }
 `;
 export const TDLinkEdit = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -94,7 +70,6 @@ export const TDLinkEdit = styled(Link)`
   }
 `;
 export const TDLinkDelete = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;

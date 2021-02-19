@@ -8,11 +8,15 @@ import RecipesNav from "../RecipesNav";
 import {
   ModalContainer,
   RecipesContainer,
-  TableHeadRecipe,
-  TDActions,
-  TDLink,
-  TDRecipe,
   SpanModal,
+  TableRecipe,
+  THeadRecipe,
+  THRecipe,
+  TDRecipe,
+  TDActions,
+  TDLinkView,
+  TDLinkEdit,
+  TDLinkDelete,
 } from "./RecipeElements";
 
 function Recipes() {
@@ -78,16 +82,17 @@ function Recipes() {
         </ModalContainer>
 
         <h1>Recipes</h1>
-        <Table bordered hover>
-          <TableHeadRecipe>
+
+        <TableRecipe>
+          <THeadRecipe>
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Ingredients</th>
-              <th>Actions</th>
+              <THRecipe>#</THRecipe>
+              <THRecipe>Title</THRecipe>
+              <THRecipe>Description</THRecipe>
+              <THRecipe>Ingredients</THRecipe>
+              <THRecipe>Actions</THRecipe>
             </tr>
-          </TableHeadRecipe>
+          </THeadRecipe>
           <tbody>
             {recipeList.map((val, key) => {
               return (
@@ -97,20 +102,22 @@ function Recipes() {
                   <TDRecipe>{val.description}</TDRecipe>
                   <TDRecipe>{val.ingredients}</TDRecipe>
                   <TDActions>
-                    <TDLink to={`/recipes/${val._id}`}>View</TDLink>
-                    <TDLink to={`/recipes/${val._id}/edit`}>Edit</TDLink>
-                    <TDLink
+                    <TDLinkView to={`/recipes/${val._id}`}>View</TDLinkView>
+                    <TDLinkEdit to={`/recipes/${val._id}/edit`}>
+                      Edit
+                    </TDLinkEdit>
+                    <TDLinkDelete
                       to={"/recipes"}
                       onClick={() => handleShow(val._id, val.title)}
                     >
                       Delete
-                    </TDLink>
+                    </TDLinkDelete>
                   </TDActions>
                 </tr>
               );
             })}
           </tbody>
-        </Table>
+        </TableRecipe>
         <Button variant='primary' onClick={addRecipe}>
           Add Recipe
         </Button>
