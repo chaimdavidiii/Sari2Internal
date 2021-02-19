@@ -51,6 +51,7 @@ export const RecNavLogo = styled(LinkR)`
   font-weight: bold;
   text-decoration: none;
   &:hover {
+    text-decoration: none;
     transition: all 0.4s ease-in-out;
     color: #fff;
   }
@@ -71,6 +72,7 @@ export const RecMobileIcon = styled.div`
   }
 `;
 export const RecNavMenu = styled.ul`
+  margin-top: 15px;
   display: flex;
   align-items: center;
   list-style: none;
@@ -100,6 +102,7 @@ export const RecNavLinkZ = styled(LinkR)`
     color: #ff5500;
   }
   &:hover {
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
     font-size: 1.1rem;
     color: #ff5500;
@@ -120,6 +123,7 @@ export const RecNavLinks = styled(LinkS)`
     color: #ff5500;
   }
   &:hover {
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
     font-size: 1.1rem;
     color: #ff5500;
@@ -147,6 +151,8 @@ export const RecNavBtnLink = styled(LinkR)`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   &:hover {
+    color: #000000;
+    text-decoration: none;
     transition: all 0.2s ease-in-out;
     background: #fff;
   }

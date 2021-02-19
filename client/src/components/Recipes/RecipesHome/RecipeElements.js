@@ -42,6 +42,12 @@ export const THRecipe = styled.th`
   font-size: 1.1.rem;
   border: 1px solid black;
 `;
+export const THRecipeNum = styled.th`
+  width: 40px;
+  text-align: center;
+  font-size: 1.1.rem;
+  border: 1px solid black;
+`;
 
 export const TDRecipe = styled.td`
   white-space: pre-line;
@@ -49,16 +55,16 @@ export const TDRecipe = styled.td`
   border: 1px solid black;
 `;
 
+export const TRRecipe = styled.tr`
+  border: 1px solid black;
+  height: 46px;
+`;
+
 export const TDActions = styled.td`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 `;
 
 export const TDLinkView = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -76,7 +82,6 @@ export const TDLinkView = styled(Link)`
   }
 `;
 export const TDLinkEdit = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -94,7 +99,6 @@ export const TDLinkEdit = styled(Link)`
   }
 `;
 export const TDLinkDelete = styled(Link)`
-  width: 100px;
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;

@@ -12,11 +12,13 @@ import {
   TableRecipe,
   THeadRecipe,
   THRecipe,
+  THRecipeNum,
   TDRecipe,
   TDActions,
   TDLinkView,
   TDLinkEdit,
   TDLinkDelete,
+  TRRecipe,
 } from "./RecipeElements";
 
 function Recipes() {
@@ -85,18 +87,18 @@ function Recipes() {
 
         <TableRecipe>
           <THeadRecipe>
-            <tr>
-              <THRecipe>#</THRecipe>
+            <TRRecipe>
+              <THRecipeNum>#</THRecipeNum>
               <THRecipe>Title</THRecipe>
               <THRecipe>Description</THRecipe>
               <THRecipe>Ingredients</THRecipe>
               <THRecipe>Actions</THRecipe>
-            </tr>
+            </TRRecipe>
           </THeadRecipe>
           <tbody>
             {recipeList.map((val, key) => {
               return (
-                <tr key={key}>
+                <TRRecipe key={key}>
                   <TDRecipe>{key + 1}</TDRecipe>
                   <TDRecipe>{val.title}</TDRecipe>
                   <TDRecipe>{val.description}</TDRecipe>
@@ -113,7 +115,7 @@ function Recipes() {
                       Delete
                     </TDLinkDelete>
                   </TDActions>
-                </tr>
+                </TRRecipe>
               );
             })}
           </tbody>
