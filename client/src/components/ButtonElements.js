@@ -17,6 +17,7 @@ export const Button = styled(Link)`
   transition: all 0.2s ease-in-out;
 
   &:hover {
+    text-decoration: none;
     transition: all 0.2s ease-in-out;
     background: ${({ primary }) => (primary ? "#fff" : "#ff5500")};
   }

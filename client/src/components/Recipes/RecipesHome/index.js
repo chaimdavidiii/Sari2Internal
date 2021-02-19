@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import "./Recipes.css";
 import Axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import RecipesNav from "../RecipesNav";
+import {
+  ModalContainer,
+  RecipesContainer,
+  TableHeadRecipe,
+  TDActions,
+  TDLink,
+  TDRecipe,
+} from "./RecipeElements";
 
 function Recipes() {
   const [recipeList, setRecipeList] = useState([]);
@@ -49,8 +56,8 @@ function Recipes() {
   return (
     <>
       <RecipesNav />
-      <div className='Recipes'>
-        <div className='modal'>
+      <RecipesContainer>
+        <ModalContainer>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title className='modal__title'>
@@ -67,37 +74,37 @@ function Recipes() {
               </Button>
             </Modal.Footer>
           </Modal>
-        </div>
+        </ModalContainer>
 
         <h1>Recipes</h1>
         <Table bordered hover>
-          <thead className='thead'>
+          <TableHeadRecipe>
             <tr>
               <th>#</th>
               <th>Title</th>
               <th>Description</th>
               <th>Ingredients</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
-          </thead>
+          </TableHeadRecipe>
           <tbody>
             {recipeList.map((val, key) => {
               return (
                 <tr key={key}>
-                  <td>{key + 1}</td>
-                  <td>{val.title}</td>
-                  <td>{val.description}</td>
-                  <td>{val.ingredients}</td>
-                  <td className='actions'>
-                    <Link to={`/recipes/${val._id}`}>View</Link>
-                    <Link to={`/recipes/${val._id}/edit`}>Edit</Link>
-                    <Link
+                  <TDRecipe>{key + 1}</TDRecipe>
+                  <TDRecipe>{val.title}</TDRecipe>
+                  <TDRecipe>{val.description}</TDRecipe>
+                  <TDRecipe>{val.ingredients}</TDRecipe>
+                  <TDActions>
+                    <TDLink to={`/recipes/${val._id}`}>View</TDLink>
+                    <TDLink to={`/recipes/${val._id}/edit`}>Edit</TDLink>
+                    <TDLink
                       to={"/recipes"}
                       onClick={() => handleShow(val._id, val.title)}
                     >
                       Delete
-                    </Link>
-                  </td>
+                    </TDLink>
+                  </TDActions>
                 </tr>
               );
             })}
@@ -107,7 +114,7 @@ function Recipes() {
           Add Recipe
         </Button>
         <hr />
-      </div>
+      </RecipesContainer>
     </>
   );
 }

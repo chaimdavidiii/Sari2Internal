@@ -14,6 +14,12 @@ export const Nav = styled.nav`
   top: 0;
   z-index: 10;
   transition: 0.5s all ease;
+  &:hover {
+    text-decoration: none !important;
+  }
+  &:focus {
+    text-decoration: none !important;
+  }
   /* @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
   } */
@@ -51,9 +57,13 @@ export const NavLogo = styled(LinkR)`
   font-weight: bold;
   text-decoration: none;
   &:hover {
+    text-decoration: none;
     transition: all 0.4s ease-in-out;
     color: #fff;
   }
+  /* &:focus {
+    text-decoration: none !important;
+  } */
 `;
 
 export const MobileIcon = styled.div`
@@ -71,6 +81,7 @@ export const MobileIcon = styled.div`
   }
 `;
 export const NavMenu = styled.ul`
+  margin-top: 15px;
   display: flex;
   align-items: center;
   list-style: none;
@@ -100,6 +111,7 @@ export const NavLinkZ = styled(LinkR)`
     color: #ff5500;
   }
   &:hover {
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
     font-size: 1.1rem;
     color: #ff5500;
@@ -110,7 +122,6 @@ export const NavLinks = styled(LinkS)`
   color: #fff;
   display: flex;
   align-items: center;
-  text-decoration: none;
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
@@ -120,6 +131,7 @@ export const NavLinks = styled(LinkS)`
     color: #ff5500;
   }
   &:hover {
+    text-decoration: none;
     transition: all 0.3s ease-in-out;
     font-size: 1.1rem;
     color: #ff5500;
@@ -147,6 +159,7 @@ export const NavBtnLink = styled(LinkR)`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   &:hover {
+    text-decoration: none;
     transition: all 0.2s ease-in-out;
     background: #fff;
   }
