@@ -12,6 +12,7 @@ import {
   TDActions,
   TDLink,
   TDRecipe,
+  SpanModal,
 } from "./RecipeElements";
 
 function Recipes() {
@@ -60,8 +61,8 @@ function Recipes() {
         <ModalContainer>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title className='modal__title'>
-                Delete '{deleteTitle}'
+              <Modal.Title>
+                <SpanModal>Delete '{deleteTitle}'</SpanModal>
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>Are you sure you want to delete this?</Modal.Body>

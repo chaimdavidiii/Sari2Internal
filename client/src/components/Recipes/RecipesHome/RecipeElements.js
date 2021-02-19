@@ -38,3 +38,10 @@ export const TDLink = styled(Link)`
     text-decoration: none;
   }
 `;
+
+export const SpanModal = styled.span`
+  margin-left: 50px;
+  align-self: center;
+  justify-content: center;
+  color: red;
+`;
