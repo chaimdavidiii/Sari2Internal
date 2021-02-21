@@ -5,6 +5,10 @@ import Button from "react-bootstrap/Button";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import RecipesNav from "../RecipesNav";
+import { BsFillTrashFill } from "react-icons/bs";
+import { BiShow } from "react-icons/bi";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { IconContext } from "react-icons";
 import {
   ModalContainer,
   RecipesContainer,
@@ -104,16 +108,20 @@ function Recipes() {
                   <TDRecipe>{val.description}</TDRecipe>
                   <TDRecipe>{val.ingredients}</TDRecipe>
                   <TDActions>
-                    <TDLinkView to={`/recipes/${val._id}`}>View</TDLinkView>
-                    <TDLinkEdit to={`/recipes/${val._id}/edit`}>
-                      Edit
-                    </TDLinkEdit>
-                    <TDLinkDelete
-                      to={"/recipes"}
-                      onClick={() => handleShow(val._id, val.title)}
-                    >
-                      Delete
-                    </TDLinkDelete>
+                    <IconContext.Provider value={{ size: "2em" }}>
+                      <TDLinkView to={`/recipes/${val._id}`}>
+                        <BiShow />
+                      </TDLinkView>
+                      <TDLinkEdit to={`/recipes/${val._id}/edit`}>
+                        <AiTwotoneEdit />
+                      </TDLinkEdit>
+                      <TDLinkDelete
+                        to={"/recipes"}
+                        onClick={() => handleShow(val._id, val.title)}
+                      >
+                        <BsFillTrashFill />
+                      </TDLinkDelete>
+                    </IconContext.Provider>
                   </TDActions>
                 </TRRecipe>
               );

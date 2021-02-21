@@ -50,6 +50,7 @@ export const FooterLinkItems = styled.div`
 `;
 
 export const FooterLinkTitle = styled.h1`
+  color: #ff5500;
   font-size: 14px;
   margin-bottom: 16px;
 `;
@@ -95,6 +96,7 @@ export const SocialLogo = styled(Link)`
   font-weight: bold;
 
   &:hover {
+    text-decoration: none;
     color: #ff5500;
     transition: 0.3s ease-out;
   }

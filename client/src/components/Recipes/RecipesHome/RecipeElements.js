@@ -69,7 +69,7 @@ export const TDLinkView = styled(Link)`
   margin: 2px 2px;
   cursor: pointer;
   border-radius: 50px;
-  background: #00b000;
+  /* background: #0000ff; */
   white-space: nowrap;
   padding: 10px 22px;
   color: #010606;
@@ -77,7 +77,7 @@ export const TDLinkView = styled(Link)`
   outline: none;
   border: none;
   &:hover {
-    color: white;
+    color: #0000ff;
     text-decoration: none;
   }
 `;
@@ -86,7 +86,7 @@ export const TDLinkEdit = styled(Link)`
   margin: 2px 2px;
   cursor: pointer;
   border-radius: 50px;
-  background: #e6e600;
+  /* background: #004000; */
   white-space: nowrap;
   padding: 10px 22px;
   color: #010606;
@@ -94,7 +94,7 @@ export const TDLinkEdit = styled(Link)`
   outline: none;
   border: none;
   &:hover {
-    color: white;
+    color: #eaea00;
     text-decoration: none;
   }
 `;
@@ -103,7 +103,7 @@ export const TDLinkDelete = styled(Link)`
   margin: 2px 2px;
   cursor: pointer;
   border-radius: 50px;
-  background: #ea0000;
+  /* background: #ea0000; */
   white-space: nowrap;
   padding: 10px 22px;
   color: #010606;
@@ -111,7 +111,7 @@ export const TDLinkDelete = styled(Link)`
   outline: none;
   border: none;
   &:hover {
-    color: white;
+    color: #ea0000;
     text-decoration: none;
   }
 `;

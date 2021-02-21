@@ -1,88 +1,158 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const TableContainer = styled.div`
+export const Container = styled.div`
+  min-height: 692px;
+  /* position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 0; */
+  overflow: hidden;
+  background: linear-gradient(
+    108deg,
+    rgba(179, 44, 3, 1) 0%,
+    rgba(179, 71, 3, 1) 100%
+  );
+`;
+
+export const Errors = styled.div`
+  color: #ff0000;
+  margin-bottom: 16px;
+`;
+
+export const SupLogo = styled.sup`
+  font-size: 1rem;
+  margin-left: 3px;
+  top: 2;
+`;
+
+export const FormWrap = styled.div`
+  height: 90%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 24px 24px;
+
+  @media screen and (max-width: 400px) {
+    height: 80%;
+  }
 `;
 
-export const TableRecipe = styled.table`
-  border: 1px solid black;
-  margin: 12px 12px;
+export const Icon = styled(Link)`
+  align-self: center;
+  margin-left: 32px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 32px;
+
+  @media screen and (max-width: 480px) {
+    margin-left: 16px;
+    margin-top: 8px;
+  }
 `;
 
-export const THeadRecipe = styled.thead`
-  background-color: #ff5500;
-  color: white;
-  justify-content: center;
-`;
-
-export const THRecipe = styled.th`
-  text-align: center;
-  font-size: 1.1.rem;
-  border: 1px solid black;
-`;
-
-export const TDRecipe = styled.td`
-  text-align: center;
-  border: 1px solid black;
-`;
-
-export const TDActions = styled.td`
-  text-align: center;
+export const FormContent = styled.div`
+  height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  /* margin-bottom: 100px; */
+
+  @media screen and (max-width: 480px) {
+    padding: 10px;
+    /* margin-bottom: 200px; */
+  }
 `;
 
-export const TDLinkView = styled(Link)`
-  text-decoration: none;
-  margin: 2px 2px;
-  cursor: pointer;
-  border-radius: 50px;
-  background: #00b000;
-  white-space: nowrap;
-  padding: 10px 22px;
-  color: #010606;
-  font-size: 16px;
-  outline: none;
-  border: none;
-  &:hover {
-    color: white;
-    text-decoration: none;
+export const Form = styled.form`
+  background: black;
+  max-width: 500px;
+  height: auto;
+  width: 100%;
+  z-index: 1;
+  display: grid;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+
+  @media screen and (max-width: 400px) {
+    padding: 32px 32px;
   }
 `;
-export const TDLinkEdit = styled(Link)`
-  text-decoration: none;
-  margin: 2px 2px;
-  cursor: pointer;
-  border-radius: 50px;
-  background: #e6e600;
-  white-space: nowrap;
-  padding: 10px 22px;
-  color: #010606;
-  font-size: 16px;
-  outline: none;
-  border: none;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
+
+export const FormH1 = styled.h1`
+  margin-bottom: 40px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
 `;
-export const TDLinkDelete = styled(Link)`
-  text-decoration: none;
-  margin: 2px 2px;
-  cursor: pointer;
-  border-radius: 50px;
-  background: #ea0000;
-  white-space: nowrap;
-  padding: 10px 22px;
-  color: #010606;
-  font-size: 16px;
-  outline: none;
+
+export const FormLabel = styled.label`
+  margin-bottom: 8x;
+  font-size: 14px;
+  color: #fff;
+`;
+
+export const FormInput = styled.input`
+  padding: 16px 16px;
+  margin-bottom: 16px;
   border: none;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
+  border-radius: 4px;
+`;
+export const FormInputTextArea = styled.textarea`
+  padding: 16px 16px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 4px;
+`;
+
+export const FormButtonWrap = styled.div`
+  display: flex;
+  column-gap: 4px;
+  height: 50px;
+  justify-content: space-between;
+`;
+
+export const FormButtonAdd = styled.button`
+  background: #0000ff;
+  width: 100%;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+`;
+export const FormButtonReset = styled.button`
+  background: #ff0000;
+  width: 100%;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+`;
+export const FormButtonBack = styled.button`
+  background: #ff5500;
+  width: 100%;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+`;
+
+export const Text = styled.span`
+  text-align: center;
+  margin-top: 24px;
+  color: #fff;
+  font-size: 14px;
 `;

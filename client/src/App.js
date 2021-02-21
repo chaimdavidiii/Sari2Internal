@@ -5,6 +5,8 @@ import Recipes from "./components/Recipes/RecipesHome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Trial from "./components/Trial";
 import RecipesNew from "./components/Recipes/RecipesNew";
+import RecipesEdit from "./components/Recipes/RecipesEdit";
+import RecipesView from "./components/Recipes/RecipesView";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path='/recipes' component={Recipes} exact />
         <Route path='/recipes/new' component={RecipesNew} exact />
         <Route path='/trial' component={Trial} exact />
+        <Route path='/recipes/:id/edit' component={RecipesEdit} exact />
+        <Route path='/recipes/:id/' component={RecipesView} exact />
       </Switch>
     </Router>
   );
