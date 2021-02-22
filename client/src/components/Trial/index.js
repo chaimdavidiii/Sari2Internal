@@ -1,6 +1,7 @@
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Axios from "axios";
 import {
   Container,
   FormContent,
@@ -27,8 +28,16 @@ const Signin = () => {
   const goback = () => {
     history.push("/recipes");
   };
-  const onSubmit = (data) => {
-    console.log(data.title);
+  const onSubmit = async (data) => {
+    await Axios.post("http://localhost:3001/recipes", {
+      title: data.title,
+      description: data.description,
+      ingredients: data.ingredients,
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        goback();
+      }
+    });
   };
 
   return (
@@ -89,16 +98,22 @@ const Signin = () => {
                 placeholder='Ingredients..'
               ></FormInputTextArea>
               {errors.description && errors.description.type === "required" && (
-                <Errors>Description is required!</Errors>
+                <Errors>Ingredients field is required!</Errors>
               )}
               {errors.description &&
                 errors.description.type === "minLength" && (
                   <Errors>Must be more than 5 characters!</Errors>
                 )}
               <FormButtonWrap>
-                <FormButtonAdd type='submit'>Submit</FormButtonAdd>
-                <FormButtonReset>Reset</FormButtonReset>
-                <FormButtonBack>Back</FormButtonBack>
+                <FormButtonAdd type='submit'>Add</FormButtonAdd>
+                <FormButtonReset
+                  onClick={() => {
+                    reset();
+                  }}
+                >
+                  Reset
+                </FormButtonReset>
+                <FormButtonBack onClick={goback}>Back</FormButtonBack>
               </FormButtonWrap>
             </Form>
           </FormContent>

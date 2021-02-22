@@ -14,9 +14,9 @@ export const RecNav = styled.nav`
   top: 0;
   z-index: 10;
   transition: 0.5s all ease;
-  /* @media screen and (max-width: 960px) {
+  @media screen and (max-width: 960px) {
     transition: 0.8s all ease;
-  } */
+  }
 `;
 
 export const RecNavbarSup = styled.sup`

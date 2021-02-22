@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   min-height: 692px;
+  /* background-color: #b8c6db;
+  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%); */
   /* position: fixed;
   bottom: 0;
   left: 0;
@@ -10,16 +12,13 @@ export const Container = styled.div`
   top: 0;
   z-index: 0; */
   overflow: hidden;
-  background: linear-gradient(
-    108deg,
-    rgba(179, 44, 3, 1) 0%,
-    rgba(179, 71, 3, 1) 100%
-  );
+  background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 100%);
 `;
 
 export const Errors = styled.div`
   color: #ff0000;
   margin-bottom: 16px;
+  text-align: center;
 `;
 
 export const SupLogo = styled.sup`
@@ -45,7 +44,7 @@ export const Icon = styled(Link)`
   margin-top: 32px;
   margin-bottom: 32px;
   text-decoration: none;
-  color: #fff;
+  color: #ff5500;
   font-weight: 700;
   font-size: 32px;
 
@@ -69,13 +68,15 @@ export const FormContent = styled.div`
 `;
 
 export const Form = styled.form`
-  background: black;
   max-width: 500px;
   height: auto;
   width: 100%;
   z-index: 1;
   display: grid;
-  margin: 0 auto;
+  margin-top: 0;
+  margin-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 32px;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
@@ -87,7 +88,7 @@ export const Form = styled.form`
 
 export const FormH1 = styled.h1`
   margin-bottom: 40px;
-  color: #fff;
+  color: #000000;
   font-size: 20px;
   font-weight: 400;
   text-align: center;
@@ -96,7 +97,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
   margin-bottom: 8x;
   font-size: 14px;
-  color: #fff;
+  color: #000000;
 `;
 
 export const FormInput = styled.input`
