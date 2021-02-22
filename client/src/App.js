@@ -1,7 +1,7 @@
 import Home from "./pages";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Signin from "./components/Signin";
-import Recipes from "./components/Recipes/RecipesHome";
+import Recipes from "./components/Recipes/RecipesAll";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Trial from "./components/Trial";
 import RecipesNew from "./components/Recipes/RecipesNew";

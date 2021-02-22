@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
@@ -14,8 +14,6 @@ import {
   FormButtonAdd,
   FormButtonReset,
   FormButtonBack,
-  Text,
-  SupLogo,
   Errors,
   FormInputTextArea,
   FormButtonWrap,
@@ -24,6 +22,10 @@ import {
 const Signin = () => {
   const { register, handleSubmit, errors, reset } = useForm();
   const history = useHistory();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const goback = () => {
     history.push("/recipes");

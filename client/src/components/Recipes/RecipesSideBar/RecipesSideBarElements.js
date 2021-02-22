@@ -11,7 +11,7 @@ export const SidebarContainer = styled.aside`
   background: #0d0d0d;
   display: grid;
   align-items: center;
-  top: 200px;
+  top: 0;
   left: 0;
   transition: 0.3s ease-in-out;
   opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
@@ -61,6 +61,7 @@ export const SidebarLink = styled(LinkS)`
 
   &:hover {
     color: #de4a00;
+    text-decoration: none;
     transition: 0.2s ease-in-out;
   }
 `;

@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {
+  Container,
+  FormContent,
+  FormH1,
+  FormInput,
+  FormWrap,
+  Icon,
+  Form,
+  FormLabel,
+  FormButtonAdd,
+  FormButtonReset,
+  FormButtonBack,
+  Errors,
+  FormInputTextArea,
+  FormButtonWrap,
+} from "./RecipesEditElements";
 import Button from "react-bootstrap/Button";
 import Axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
@@ -40,96 +53,85 @@ function EditRecipe() {
   };
 
   return (
-    <div>
-      <h1 className='editRecipe'>Edit Recipe for '{recipe.title}'</h1>
-      <Form onSubmit={handleSubmit(onSubmit)} className='mx-4'>
-        <Form.Group as={Row} controlId='formHorizontalTitle'>
-          <Form.Label column sm={2}>
-            Title
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control
-              ref={register({
-                required: true,
-                minLength: 4,
-              })}
-              type='text'
-              name='title'
-              defaultValue={recipe.title}
-            />
-            {errors.title && errors.title.type === "required" && (
-              <div className='errorsStyle'>Title is required!</div>
-            )}
-            {errors.title && errors.title.type === "minLength" && (
-              <div className='errorsStyle'>Must be more than 5 characters!</div>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalDescription'>
-          <Form.Label column sm={2}>
-            Description
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control
-              ref={register({
-                required: true,
-                minLength: 15,
-              })}
-              name='description'
-              as='textarea'
-              defaultValue={recipe.description}
-            />
-            {errors.description && errors.description.type === "required" && (
-              <div className='errorsStyle'>Description is required!</div>
-            )}
-            {errors.description && errors.description.type === "minLength" && (
-              <div className='errorsStyle'>Must be more than 5 characters!</div>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalIngredients'>
-          <Form.Label column sm={2}>
-            Ingredients
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control
-              ref={register({
-                required: true,
-                minLength: 15,
-              })}
-              name='ingredients'
-              as='textarea'
-              defaultValue={recipe.ingredients}
-            />
-            {errors.ingredients && errors.ingredients.type === "required" && (
-              <div className='errorsStyle'>Ingredients field is required!</div>
-            )}
-            {errors.ingredients && errors.ingredients.type === "minLength" && (
-              <div className='errorsStyle'>Must be more than 5 characters!</div>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Col sm={{ span: 10, offset: 2 }}>
-            <Button className='mr-1' type='submit'>
-              Save
-            </Button>
-            <Button
-              className='mr-1'
-              onClick={() => {
-                reset();
-              }}
-              variant='danger'
-            >
-              Reset
-            </Button>
-            <Button onClick={goBack} variant='warning'>
-              Back
-            </Button>
-          </Col>
-        </Form.Group>
-      </Form>
-    </div>
+    <>
+      <Container>
+        <FormWrap>
+          <Icon to='/'>Edit '{recipe.title}'</Icon>
+          <FormContent>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <FormLabel htmlFor='for'>Title</FormLabel>
+              <FormInput
+                ref={register({
+                  required: true,
+                  minLength: 4,
+                })}
+                type='text'
+                name='title'
+                placeholder='Title..'
+                defaultValue={recipe.title}
+              />
+              {errors.title && errors.title.type === "required" && (
+                <Errors>Title is Required!</Errors>
+              )}
+              {errors.title && errors.title.type === "minLength" && (
+                <Errors>Must be more than 4 characters!</Errors>
+              )}
+
+              <FormLabel htmlFor='for'>Description</FormLabel>
+              <FormInputTextArea
+                rows={4}
+                ref={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                name='description'
+                as='textarea'
+                placeholder='Description..'
+                defaultValue={recipe.description}
+              ></FormInputTextArea>
+              {errors.description && errors.description.type === "required" && (
+                <Errors>Description is required!</Errors>
+              )}
+              {errors.description &&
+                errors.description.type === "minLength" && (
+                  <Errors>Must be more than 5 characters!</Errors>
+                )}
+
+              <FormLabel htmlFor='for'>Ingredients</FormLabel>
+              <FormInputTextArea
+                rows={4}
+                ref={register({
+                  required: true,
+                  minLength: 5,
+                })}
+                name='ingredients'
+                as='textarea'
+                placeholder='Ingredients..'
+                defaultValue={recipe.ingredients}
+              ></FormInputTextArea>
+              {errors.description && errors.description.type === "required" && (
+                <Errors>Ingredients field is required!</Errors>
+              )}
+              {errors.description &&
+                errors.description.type === "minLength" && (
+                  <Errors>Must be more than 5 characters!</Errors>
+                )}
+              <FormButtonWrap>
+                <FormButtonAdd type='submit'>Save</FormButtonAdd>
+                <FormButtonReset
+                  onClick={() => {
+                    reset();
+                  }}
+                >
+                  Reset
+                </FormButtonReset>
+                <FormButtonBack onClick={goBack}>Back</FormButtonBack>
+              </FormButtonWrap>
+            </Form>
+          </FormContent>
+        </FormWrap>
+      </Container>
+    </>
   );
 }
 
