@@ -1,159 +1,155 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
-export const Container = styled.div`
-  min-height: 692px;
-  /* background-color: #b8c6db;
-  background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%); */
-  /* position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 0; */
-  overflow: hidden;
-  background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 100%);
-`;
-
-export const Errors = styled.div`
-  color: #ff0000;
-  margin-bottom: 16px;
-  text-align: center;
-`;
-
-export const SupLogo = styled.sup`
-  font-size: 1rem;
-  margin-left: 3px;
-  top: 2;
-`;
-
-export const FormWrap = styled.div`
-  height: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  @media screen and (max-width: 400px) {
-    height: 80%;
-  }
-`;
-
-export const Icon = styled(Link)`
-  align-self: center;
-  margin-left: 32px;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  text-decoration: none;
-  color: #ff5500;
-  font-weight: 700;
-  font-size: 32px;
-
-  @media screen and (max-width: 480px) {
-    margin-left: 16px;
-    margin-top: 8px;
-  }
-`;
-
-export const FormContent = styled.div`
+export const RecipeContainer = styled.div`
+  margin-top: 80px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin-bottom: 100px; */
+  align-items: center;
+  background-color: #f9d29d;
+  background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    height: 100%;
+  }
+`;
+
+export const ModalContainer = styled.div`
+  width: 100%;
+`;
+
+export const SpanModal = styled.span`
+  color: #ff0000;
+`;
+
+export const RecipeButtonAdd = styled(Button)`
+  background-color: #808000;
+`;
+
+export const RecipeWrapper = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  grid-gap: 16px;
+  padding: 0 50px;
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+`;
+
+export const RecipeCard = styled.div`
+  overflow: auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  max-height: 600px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+`;
+
+export const RecipeIcon = styled.img`
+  height: 240px;
+  width: 240px;
+  margin-bottom: 10px;
+`;
+
+export const RecipeH1 = styled.h1`
+  font-size: 2.5rem;
+  color: #ff5500;
+  margin-bottom: 64px;
 
   @media screen and (max-width: 480px) {
-    padding: 10px;
-    /* margin-bottom: 200px; */
+    font-size: 2rem;
   }
 `;
 
-export const Form = styled.form`
-  max-width: 500px;
-  height: auto;
-  width: 100%;
-  z-index: 1;
-  display: grid;
-  margin-top: 0;
-  margin-bottom: 24px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 32px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-
-  @media screen and (max-width: 400px) {
-    padding: 32px 32px;
-  }
+export const RecipeTitle = styled.h2`
+  font-size: 1rem;
+  margin-bottom: 10px;
 `;
 
-export const FormH1 = styled.h1`
-  margin-bottom: 40px;
-  color: #000000;
-  font-size: 20px;
-  font-weight: 400;
+export const RecipeP = styled.p`
+  font-size: 1rem;
   text-align: center;
+  white-space: pre-line;
 `;
 
-export const FormLabel = styled.label`
-  margin-bottom: 8x;
-  font-size: 14px;
-  color: #000000;
-`;
-
-export const FormInput = styled.input`
-  padding: 16px 16px;
-  margin-bottom: 16px;
-  border: none;
-  border-radius: 4px;
-`;
-export const FormInputTextArea = styled.textarea`
-  padding: 16px 16px;
-  margin-bottom: 16px;
-  border: none;
-  border-radius: 4px;
-`;
-
-export const FormButtonWrap = styled.div`
+export const RecipeActions = styled.div`
   display: flex;
-  column-gap: 4px;
-  height: 50px;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
-export const FormButtonAdd = styled.button`
-  background: #0000ff;
-  width: 100%;
-  margin-top: 8px;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 20px;
+export const RecipeLinkView = styled(Link)`
+  text-decoration: none;
+  margin: 2px 2px;
   cursor: pointer;
-`;
-export const FormButtonReset = styled.button`
-  background: #ff0000;
-  width: 100%;
-  margin-top: 8px;
+  border-radius: 50px;
+  /* background: #0000ff; */
+  white-space: nowrap;
+  padding: 10px 22px;
+  color: #010606;
+  font-size: 16px;
+  outline: none;
   border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
+  &:hover {
+    color: #0000ff;
+    text-decoration: none;
+  }
 `;
-export const FormButtonBack = styled.button`
-  background: #ff5500;
-  width: 100%;
-  margin-top: 8px;
+export const RecipeLinkEdit = styled(Link)`
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 50px;
+  /* background: #004000; */
+  white-space: nowrap;
+  padding: 10px 22px;
+  color: #010606;
+  font-size: 16px;
+  outline: none;
   border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
+  &:hover {
+    color: #eaea00;
+    text-decoration: none;
+  }
 `;
-
-export const Text = styled.span`
-  text-align: center;
-  margin-top: 24px;
-  color: #fff;
-  font-size: 14px;
+export const RecipeLinkDelete = styled(Link)`
+  text-decoration: none;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 50px;
+  /* background: #ea0000; */
+  white-space: nowrap;
+  padding: 10px 22px;
+  color: #010606;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  &:hover {
+    color: #ea0000;
+    text-decoration: none;
+  }
 `;
