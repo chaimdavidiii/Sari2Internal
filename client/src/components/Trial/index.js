@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   OrdersContainer,
@@ -10,6 +10,10 @@ import {
   TotalTag,
   InputNum,
   Errors,
+  OrdersWrapper,
+  OrdersTitle,
+  OrdersSectionText,
+  OrdersTotalText,
 } from "./TrialElements";
 
 const Trial = () => {
@@ -37,39 +41,40 @@ const Trial = () => {
     reset: resetA,
   } = useForm();
 
-  // const [trentsInput, setTrentsInput] = useState("");
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
 
-  // const addTrentsInput = (e) => {
-  //   setTrentsInput(e.target.value);
-  // };
   const onSubmitT = (data) => {
-    console.log(data.trents);
-    if (data.trentsQ === "") {
-      data.trentsQ = 1;
-      console.log(data.trentsQ);
-    }
+    let obj = { item: data.trents, quantity: data.trentsQ };
+    setTrentsList([...trentsList, obj]);
+    console.log(trentsList);
     reset();
   };
 
   const onSubmitV = (data) => {
-    console.log(data.veggies);
+    let obj = { item: data.veggies, quantity: data.veggiesQ };
+    setVeggiesList([...veggiesList, obj]);
     resetV();
   };
   const onSubmitM = (data) => {
-    console.log(data.meat);
+    let obj = { item: data.meat, quantity: data.meatQ };
+    setMeatList([...meatList, obj]);
     resetM();
   };
   const onSubmitA = (data) => {
-    console.log(data.asian);
+    let obj = { item: data.asian, quantity: data.asianQ };
+    setAsianList([...asianList, obj]);
     resetA();
   };
 
   return (
-    <>
-      <OrdersContainer>
+    <OrdersContainer>
+      <OrdersTitle>Orders</OrdersTitle>
+      <OrdersWrapper>
         <TrentsArea>
           <form onSubmit={handleSubmit(onSubmitT)}>
-            <h1>Trents</h1>
+            <OrdersSectionText>Trents</OrdersSectionText>
             <input
               type='text'
               name='trents'
@@ -92,7 +97,7 @@ const Trial = () => {
         </TrentsArea>
         <VeggiesArea>
           <form onSubmit={handleSubmitV(onSubmitV)}>
-            <h1>Veggies</h1>
+            <OrdersSectionText>Veggies</OrdersSectionText>
             <input
               type='text'
               name='veggies'
@@ -113,7 +118,7 @@ const Trial = () => {
         </VeggiesArea>
         <MeatArea onSubmit={handleSubmitM(onSubmitM)}>
           <form>
-            <h1>Meat</h1>
+            <OrdersSectionText>Meat</OrdersSectionText>
             <input
               type='text'
               name='meat'
@@ -134,7 +139,7 @@ const Trial = () => {
         </MeatArea>
         <AsianArea onSubmit={handleSubmitA(onSubmitA)}>
           <form>
-            <h1>Asian</h1>
+            <OrdersSectionText>Asian</OrdersSectionText>
             <input
               type='text'
               name='asian'
@@ -154,12 +159,62 @@ const Trial = () => {
             <button type='submit'>Add</button>
           </form>
         </AsianArea>
-        <TotalTag>
-          <h3>Total:</h3>
-        </TotalTag>
-        <TotalOrders></TotalOrders>
-      </OrdersContainer>
-    </>
+      </OrdersWrapper>
+
+      <TotalTag>
+        <OrdersTitle>Total:</OrdersTitle>
+      </TotalTag>
+      <TotalOrders>
+        <TrentsArea>
+          <OrdersTotalText>Trents</OrdersTotalText>
+          <ul>
+            {trentsList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              trentsList.map((val, key) => {
+                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
+              })
+            )}
+          </ul>
+        </TrentsArea>
+        <VeggiesArea>
+          <OrdersTotalText>Veggies</OrdersTotalText>
+          <ul>
+            {veggiesList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              veggiesList.map((val, key) => {
+                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
+              })
+            )}
+          </ul>
+        </VeggiesArea>
+        <MeatArea>
+          <OrdersTotalText>Meat</OrdersTotalText>
+          <ul>
+            {meatList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              meatList.map((val, key) => {
+                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
+              })
+            )}
+          </ul>
+        </MeatArea>
+        <AsianArea>
+          <OrdersTotalText>Asian</OrdersTotalText>
+          <ul>
+            {asianList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              asianList.map((val, key) => {
+                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
+              })
+            )}
+          </ul>
+        </AsianArea>
+      </TotalOrders>
+    </OrdersContainer>
   );
 };
 
