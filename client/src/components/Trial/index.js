@@ -1,144 +1,166 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import { useHistory } from "react-router-dom";
-import Modal from "react-bootstrap/modal";
-import RecipesNav from "../Recipes/RecipesNav";
-import { BsFillTrashFill } from "react-icons/bs";
-import { BiShow } from "react-icons/bi";
-import { AiTwotoneEdit } from "react-icons/ai";
-import { IconContext } from "react-icons";
-import RecipesSideBar from "../Recipes/RecipesSideBar";
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
-  RecipeContainer,
-  RecipeH1,
-  RecipeWrapper,
-  RecipeCard,
-  RecipeIcon,
-  RecipeTitle,
-  RecipeP,
-  RecipeActions,
-  RecipeLinkView,
-  RecipeLinkEdit,
-  RecipeLinkDelete,
-  RecipeButtonAdd,
-  SpanModal,
-  ModalContainer,
+  OrdersContainer,
+  TrentsArea,
+  VeggiesArea,
+  MeatArea,
+  AsianArea,
+  TotalOrders,
+  TotalTag,
+  InputNum,
+  Errors,
 } from "./TrialElements";
 
-const Recipe = () => {
-  const [recipeList, setRecipeList] = useState([]);
-  const [show, setShow] = useState(false);
-  const [deleteTitle, setDeleteTitle] = useState("");
-  const [deleteID, setDeleteID] = useState("");
-  const history = useHistory();
-  const [isOpen, setIsOpen] = useState(false);
+const Trial = () => {
+  const [trentsList, setTrentsList] = useState([]);
+  const [veggiesList, setVeggiesList] = useState([]);
+  const [meatList, setMeatList] = useState([]);
+  const [asianList, setAsianList] = useState([]);
+  const { register, handleSubmit, errors, reset } = useForm();
+  const {
+    register: registerV,
+    handleSubmit: handleSubmitV,
+    errors: errorsV,
+    reset: resetV,
+  } = useForm();
+  const {
+    register: registerM,
+    handleSubmit: handleSubmitM,
+    errors: errorsM,
+    reset: resetM,
+  } = useForm();
+  const {
+    register: registerA,
+    handleSubmit: handleSubmitA,
+    errors: errorsA,
+    reset: resetA,
+  } = useForm();
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
+  // const [trentsInput, setTrentsInput] = useState("");
+
+  // const addTrentsInput = (e) => {
+  //   setTrentsInput(e.target.value);
+  // };
+  const onSubmitT = (data) => {
+    console.log(data.trents);
+    if (data.trentsQ === "") {
+      data.trentsQ = 1;
+      console.log(data.trentsQ);
+    }
+    reset();
   };
 
-  const handleClose = () => setShow(false);
-  const handleShow = (id, title) => {
-    setShow(true);
-    setDeleteTitle(title);
-    setDeleteID(id);
+  const onSubmitV = (data) => {
+    console.log(data.veggies);
+    resetV();
   };
-
-  const deleteRecipe = () => {
-    Axios.delete(`http://localhost:3001/recipes/delete/${deleteID}`).then(
-      (response) => {
-        if (response.statusText === "OK") {
-          handleClose();
-          goback();
-        }
-      }
-    );
+  const onSubmitM = (data) => {
+    console.log(data.meat);
+    resetM();
   };
-
-  const goback = () => {
-    history.push("/trial");
-  };
-
-  useEffect(() => {
-    Axios.get("http://localhost:3001/read").then((response) => {
-      setRecipeList(response.data);
-    });
-  }, [recipeList]);
-
-  const addRecipe = () => {
-    history.push("/recipes/new");
+  const onSubmitA = (data) => {
+    console.log(data.asian);
+    resetA();
   };
 
   return (
     <>
-      <RecipesSideBar isOpen={isOpen} toggle={toggle} />
-      <RecipesNav toggle={toggle} />
-      <RecipeContainer>
-        <ModalContainer>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <SpanModal>Delete '{deleteTitle}'</SpanModal>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Are you sure you want to delete this?</Modal.Body>
-            <Modal.Footer>
-              <RecipeButtonAdd variant='primary' onClick={deleteRecipe}>
-                Yes
-              </RecipeButtonAdd>
-              <RecipeButtonAdd variant='secondary' onClick={handleClose}>
-                No
-              </RecipeButtonAdd>
-            </Modal.Footer>
-          </Modal>
-        </ModalContainer>
+      <OrdersContainer>
+        <TrentsArea>
+          <form onSubmit={handleSubmit(onSubmitT)}>
+            <h1>Trents</h1>
+            <input
+              type='text'
+              name='trents'
+              ref={register({
+                required: true,
+              })}
+            />
+            {errors.trents && errors.trents.type === "required" && (
+              <Errors>This field is required.</Errors>
+            )}
+            <InputNum
+              type='number'
+              min='1'
+              name='trentsQ'
+              ref={register()}
+              defaultValue='1'
+            />
+            <button type='submit'>Add</button>
+          </form>
+        </TrentsArea>
+        <VeggiesArea>
+          <form onSubmit={handleSubmitV(onSubmitV)}>
+            <h1>Veggies</h1>
+            <input
+              type='text'
+              name='veggies'
+              ref={registerV({ required: true })}
+            />
+            {errorsV.veggies && errorsV.veggies.type === "required" && (
+              <Errors>This field is required.</Errors>
+            )}
+            <InputNum
+              type='number'
+              min='1'
+              name='veggiesQ'
+              ref={registerV()}
+              defaultValue='1'
+            />
+            <button type='submit'>Add</button>
+          </form>
+        </VeggiesArea>
+        <MeatArea onSubmit={handleSubmitM(onSubmitM)}>
+          <form>
+            <h1>Meat</h1>
+            <input
+              type='text'
+              name='meat'
+              ref={registerM({ required: true })}
+            />
+            {errorsM.meat && errorsM.meat.type === "required" && (
+              <Errors>This field is required.</Errors>
+            )}
+            <InputNum
+              type='number'
+              min='1'
+              name='meatQ'
+              ref={registerM()}
+              defaultValue='1'
+            />
+            <button type='submit'>Add</button>
+          </form>
+        </MeatArea>
+        <AsianArea onSubmit={handleSubmitA(onSubmitA)}>
+          <form>
+            <h1>Asian</h1>
+            <input
+              type='text'
+              name='asian'
+              ref={registerA({ required: true })}
+            />
+            {errorsA.asian && errorsA.asian.type === "required" && (
+              <Errors>This field is required.</Errors>
+            )}
+            <InputNum
+              type='number'
+              min='1'
+              name='asianQ'
+              ref={registerA()}
+              defaultValue='1'
+            />
 
-        <RecipeH1>The Recipes</RecipeH1>
-        <RecipeWrapper>
-          {recipeList.map((val, key) => {
-            return (
-              <RecipeCard>
-                <RecipeIcon
-                  src={require("../images/default-image.jpg").default}
-                />
-                <h3>Title:</h3>
-                <RecipeTitle>{val.title}</RecipeTitle>
-                <h3>Description:</h3>
-                <RecipeP>{val.description}</RecipeP>
-                <h3>Ingredients:</h3>
-                <RecipeP>{val.ingredients}</RecipeP>
-                <RecipeActions>
-                  <RecipeLinkView to={`/recipes/${val._id}`}>
-                    <BiShow />
-                  </RecipeLinkView>
-                  <RecipeLinkEdit to={`/recipes/${val._id}/edit`}>
-                    <AiTwotoneEdit />
-                  </RecipeLinkEdit>
-                  <RecipeLinkDelete
-                    // to={"/recipes"}
-                    onClick={() => handleShow(val._id, val.title)}
-                  >
-                    <BsFillTrashFill />
-                  </RecipeLinkDelete>
-                </RecipeActions>
-              </RecipeCard>
-            );
-          })}
-        </RecipeWrapper>
-        {/* <RecipeCard>
-          <RecipeIcon src={require("../images/sari2.svg").default} />
-          <RecipeTitle>Reduce Expenses</RecipeTitle>
-          <RecipeP>Blah blah blah</RecipeP>
-        </RecipeCard>
-        <RecipeCard>
-          <RecipeIcon src={require("../images/sari3.svg").default} />
-          <RecipeTitle>Reduce Expenses</RecipeTitle>
-          <RecipeP>Blah blah blah</RecipeP>
-        </RecipeCard> */}
-      </RecipeContainer>
+            <button type='submit'>Add</button>
+          </form>
+        </AsianArea>
+        <TotalTag>
+          <h3>Total:</h3>
+        </TotalTag>
+        <TotalOrders></TotalOrders>
+      </OrdersContainer>
     </>
   );
 };
 
-export default Recipe;
+export default Trial;

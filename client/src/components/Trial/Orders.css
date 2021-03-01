@@ -1,0 +1,54 @@
+.grid {
+  height: 80vh;
+  background: rgb(131, 36, 36);
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  gap: 5px;
+  grid-template-areas:
+    "box1 box2 box3" "box1 box4 box4" "box1 box5 box5"
+    "box1 try2 try1";
+}
+
+.trents {
+  grid-area: box1;
+  background-color: blue;
+  color: white;
+}
+
+.veggies {
+  grid-area: box2;
+  background-color: green;
+  color: white;
+}
+
+.asian {
+  grid-area: box3;
+  background-color: yellow;
+  color: white;
+}
+
+.tag {
+  color: white;
+  grid-area: box4;
+  background-color: purple;
+}
+
+.thefifth {
+  color: white;
+  grid-area: box5;
+  background-color: pink;
+}
+
+.try1 {
+  color: white;
+  background-color: maroon;
+  grid-area: try1;
+}
+
+.try2 {
+  color: white;
+  background-color: mediumblue;
+  grid-area: try2;
+}

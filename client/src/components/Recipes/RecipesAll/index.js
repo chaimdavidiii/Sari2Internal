@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import { Link, useHistory } from "react-router-dom";
-import Modal from "react-bootstrap/Modal";
+import { useHistory } from "react-router-dom";
+import Modal from "react-bootstrap/modal";
 import RecipesNav from "../RecipesNav";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiShow } from "react-icons/bi";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import RecipesSideBar from "../RecipesSideBar";
+
 import {
-  ModalContainer,
-  RecipesContainer,
+  RecipeContainer,
+  RecipeH1,
+  RecipeWrapper,
+  RecipeCard,
+  RecipeIcon,
+  RecipeTitle,
+  RecipeP,
+  RecipeActions,
+  RecipeLinkView,
+  RecipeLinkEdit,
+  RecipeLinkDelete,
+  RecipeButtonAdd,
   SpanModal,
-  TableRecipe,
-  THeadRecipe,
-  THRecipe,
-  THRecipeNum,
-  TDRecipe,
-  TDActions,
-  TDLinkView,
-  TDLinkEdit,
-  TDLinkDelete,
-  TRRecipe,
+  ModalContainer,
 } from "./RecipeElements";
 
-function Recipes() {
+const Recipe = () => {
   const [recipeList, setRecipeList] = useState([]);
   const [show, setShow] = useState(false);
   const [deleteTitle, setDeleteTitle] = useState("");
@@ -57,7 +57,7 @@ function Recipes() {
   };
 
   const goback = () => {
-    history.push("/recipes");
+    history.push("/trial");
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ function Recipes() {
     <>
       <RecipesSideBar isOpen={isOpen} toggle={toggle} />
       <RecipesNav toggle={toggle} />
-      <RecipesContainer>
+      <RecipeContainer>
         <ModalContainer>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -84,68 +84,63 @@ function Recipes() {
             </Modal.Header>
             <Modal.Body>Are you sure you want to delete this?</Modal.Body>
             <Modal.Footer>
-              <Button variant='primary' onClick={deleteRecipe}>
+              <RecipeButtonAdd variant='primary' onClick={deleteRecipe}>
                 Yes
-              </Button>
-              <Button variant='secondary' onClick={handleClose}>
+              </RecipeButtonAdd>
+              <RecipeButtonAdd variant='secondary' onClick={handleClose}>
                 No
-              </Button>
+              </RecipeButtonAdd>
             </Modal.Footer>
           </Modal>
         </ModalContainer>
 
-        <h1>Recipes</h1>
-
-        <TableRecipe>
-          <THeadRecipe>
-            <TRRecipe>
-              <THRecipeNum>#</THRecipeNum>
-              <THRecipe>Title</THRecipe>
-              <THRecipe>Description</THRecipe>
-              <THRecipe>Ingredients</THRecipe>
-              <THRecipe>Actions</THRecipe>
-            </TRRecipe>
-          </THeadRecipe>
-          <tbody>
-            {recipeList.map((val, key) => {
-              return (
-                <TRRecipe key={key}>
-                  <TDRecipe>{key + 1}</TDRecipe>
-                  <TDRecipe>{val.title}</TDRecipe>
-                  <TDRecipe>{val.description}</TDRecipe>
-                  <TDRecipe>{val.ingredients}</TDRecipe>
-                  <TDActions>
-                    <IconContext.Provider value={{ size: "2em" }}>
-                      <TDLinkView to={`/recipes/${val._id}`} aria-label='View'>
-                        <BiShow />
-                      </TDLinkView>
-                      <TDLinkEdit
-                        to={`/recipes/${val._id}/edit`}
-                        aria-label='Edit'
-                      >
-                        <AiTwotoneEdit />
-                      </TDLinkEdit>
-                      <TDLinkDelete
-                        to={"/recipes"}
-                        onClick={() => handleShow(val._id, val.title)}
-                        aria-label='Delete'
-                      >
-                        <BsFillTrashFill />
-                      </TDLinkDelete>
-                    </IconContext.Provider>
-                  </TDActions>
-                </TRRecipe>
-              );
-            })}
-          </tbody>
-        </TableRecipe>
-        <Button variant='primary' onClick={addRecipe}>
-          Add Recipe
-        </Button>
-        <hr />
-      </RecipesContainer>
+        <RecipeH1>The Recipes</RecipeH1>
+        <RecipeWrapper>
+          {recipeList.map((val, key) => {
+            return (
+              <RecipeCard>
+                <RecipeIcon
+                  src={require("../../images/default-image.jpg").default}
+                />
+                <h3>Title:</h3>
+                <RecipeTitle>{val.title}</RecipeTitle>
+                <h3>Description:</h3>
+                <RecipeP>{val.description}</RecipeP>
+                <h3>Ingredients:</h3>
+                <RecipeP>{val.ingredients}</RecipeP>
+                <RecipeActions>
+                  <IconContext.Provider value={{ size: "1.5em" }}>
+                    <RecipeLinkView to={`/recipes/${val._id}`}>
+                      <BiShow />
+                    </RecipeLinkView>
+                    <RecipeLinkEdit to={`/recipes/${val._id}/edit`}>
+                      <AiTwotoneEdit />
+                    </RecipeLinkEdit>
+                    <RecipeLinkDelete
+                      // to={"/recipes"}
+                      onClick={() => handleShow(val._id, val.title)}
+                    >
+                      <BsFillTrashFill />
+                    </RecipeLinkDelete>
+                  </IconContext.Provider>
+                </RecipeActions>
+              </RecipeCard>
+            );
+          })}
+        </RecipeWrapper>
+        {/* <RecipeCard>
+          <RecipeIcon src={require("../images/sari2.svg").default} />
+          <RecipeTitle>Reduce Expenses</RecipeTitle>
+          <RecipeP>Blah blah blah</RecipeP>
+        </RecipeCard>
+        <RecipeCard>
+          <RecipeIcon src={require("../images/sari3.svg").default} />
+          <RecipeTitle>Reduce Expenses</RecipeTitle>
+          <RecipeP>Blah blah blah</RecipeP>
+        </RecipeCard> */}
+      </RecipeContainer>
     </>
   );
-}
+};
 
-export default Recipes;
+export default Recipe;

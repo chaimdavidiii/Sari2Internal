@@ -32,6 +32,8 @@ function EditRecipe() {
     });
   }, [id]);
 
+  useEffect(() => window.scrollTo(0, 0));
+
   const goToRecipes = () => {
     history.push("/recipes");
   };

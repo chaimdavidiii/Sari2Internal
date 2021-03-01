@@ -1,15 +1,23 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
-export const RecipesContainer = styled.div`
+export const RecipeContainer = styled.div`
   margin-top: 80px;
-  text-align: center;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  background-color: #f9d29d;
+  background-image: linear-gradient(315deg, #f9d29d 0%, #ffd8cb 74%);
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    height: 100%;
+  }
 `;
 
 export const ModalContainer = styled.div`
@@ -17,54 +25,85 @@ export const ModalContainer = styled.div`
 `;
 
 export const SpanModal = styled.span`
-  color: red;
+  color: #ff0000;
 `;
 
-// export const TableContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   margin: 24px 24px;
-// `;
-
-export const TableRecipe = styled.table`
-  border: 1px solid black;
-  margin: 12px 12px;
+export const RecipeButtonAdd = styled(Button)`
+  background-color: #808000;
 `;
 
-export const THeadRecipe = styled.thead`
-  background-color: #ff5500;
-  color: white;
-  justify-content: center;
+export const RecipeWrapper = styled.div`
+  max-width: 1800px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  grid-gap: 16px;
+  padding: 0 50px;
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
 `;
 
-export const THRecipe = styled.th`
+export const RecipeCard = styled.div`
+  margin-bottom: 20px;
+  overflow: auto;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  max-height: 700px;
+  padding: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+`;
+
+export const RecipeIcon = styled.img`
+  height: 240px;
+  width: 240px;
+  margin-bottom: 10px;
+`;
+
+export const RecipeH1 = styled.h1`
+  font-size: 2.5rem;
+  color: #ff5500;
+  margin-bottom: 64px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 2rem;
+  }
+`;
+
+export const RecipeTitle = styled.h2`
+  font-size: 1rem;
+  margin-bottom: 10px;
+`;
+
+export const RecipeP = styled.p`
+  font-size: 1rem;
   text-align: center;
-  font-size: 1.1.rem;
-  border: 1px solid black;
-`;
-export const THRecipeNum = styled.th`
-  width: 40px;
-  text-align: center;
-  font-size: 1.1.rem;
-  border: 1px solid black;
-`;
-
-export const TDRecipe = styled.td`
   white-space: pre-line;
-  text-align: center;
-  border: 1px solid black;
 `;
 
-export const TRRecipe = styled.tr`
-  border: 1px solid black;
-  height: 46px;
-`;
-
-export const TDActions = styled.td`
+export const RecipeActions = styled.div`
+  display: flex;
   justify-content: center;
 `;
 
-export const TDLinkView = styled(Link)`
+export const RecipeLinkView = styled(Link)`
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -81,7 +120,7 @@ export const TDLinkView = styled(Link)`
     text-decoration: none;
   }
 `;
-export const TDLinkEdit = styled(Link)`
+export const RecipeLinkEdit = styled(Link)`
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
@@ -98,7 +137,7 @@ export const TDLinkEdit = styled(Link)`
     text-decoration: none;
   }
 `;
-export const TDLinkDelete = styled(Link)`
+export const RecipeLinkDelete = styled(Link)`
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;
