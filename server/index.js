@@ -4,6 +4,9 @@ const app = express();
 require("dotenv").config();
 const RecipeModel = require("./models/Recipe");
 const TrentsModel = require("./models/Trents");
+const MeatModel = require("./models/Meat");
+const AsianModel = require("./models/Asian");
+const VeggiesModel = require("./models/Veggies");
 const cors = require("cors");
 
 app.use(express.json());
@@ -20,6 +23,7 @@ mongoose.connect(
   }
 );
 
+// show recipes
 app.get("/read", async (req, res) => {
   // RecipeModel.find({ $where: {title: "kare"}}, )
   await RecipeModel.find({}, (err, result) => {
@@ -30,6 +34,7 @@ app.get("/read", async (req, res) => {
   });
 });
 
+// get trents orders
 app.get("/orders/trents", async (req, res) => {
   await TrentsModel.find({}, (err, result) => {
     if (err) {
@@ -39,6 +44,7 @@ app.get("/orders/trents", async (req, res) => {
   });
 });
 
+// post trents orders
 app.post("/orders/trents", async (req, res) => {
   const item = req.body.item;
   const quantity = req.body.quantity;
@@ -54,7 +60,88 @@ app.post("/orders/trents", async (req, res) => {
     console.log(error);
   }
 });
+// get meat orders
+app.get("/orders/meat", async (req, res) => {
+  await MeatModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
+  });
+});
 
+// post meat orders
+app.post("/orders/meat", async (req, res) => {
+  const item = req.body.item;
+  const quantity = req.body.quantity;
+
+  const meat = new MeatModel({
+    item: item,
+    quantity: quantity,
+  });
+  try {
+    await meat.save();
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// get asian orders
+app.get("/orders/asian", async (req, res) => {
+  await AsianModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
+  });
+});
+
+// post asian orders
+app.post("/orders/asian", async (req, res) => {
+  const item = req.body.item;
+  const quantity = req.body.quantity;
+
+  const asian = new AsianModel({
+    item: item,
+    quantity: quantity,
+  });
+  try {
+    await asian.save();
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// get veggies orders
+app.get("/orders/veggies", async (req, res) => {
+  await VeggiesModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
+  });
+});
+
+// post veggies orders
+app.post("/orders/veggies", async (req, res) => {
+  const item = req.body.item;
+  const quantity = req.body.quantity;
+
+  const veggies = new VeggiesModel({
+    item: item,
+    quantity: quantity,
+  });
+  try {
+    await veggies.save();
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// show particular recipe
 app.get("/recipes/:id", async (req, res) => {
   const id = req.params.id;
   await RecipeModel.findById(id, (err, result) => {
@@ -65,6 +152,7 @@ app.get("/recipes/:id", async (req, res) => {
   });
 });
 
+// post new recipe
 app.post("/recipes", async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
@@ -83,6 +171,7 @@ app.post("/recipes", async (req, res) => {
   }
 });
 
+// update recipe
 app.put("/recipes/update", async (req, res) => {
   const newTitle = req.body.newTitle;
   const newDescription = req.body.newDescription;
@@ -102,6 +191,7 @@ app.put("/recipes/update", async (req, res) => {
   }
 });
 
+//delete recipe
 app.delete("/recipes/delete/:id", async (req, res) => {
   const id = req.params.id;
   await RecipeModel.findByIdAndRemove(id).exec();
