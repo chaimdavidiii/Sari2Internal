@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
 const RecipeModel = require("./models/Recipe");
+const TrentsModel = require("./models/Trents");
 const cors = require("cors");
 
 app.use(express.json());
@@ -27,6 +28,31 @@ app.get("/read", async (req, res) => {
     }
     res.send(result);
   });
+});
+
+app.get("/orders/trents", async (req, res) => {
+  await TrentsModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
+  });
+});
+
+app.post("/orders/trents", async (req, res) => {
+  const item = req.body.item;
+  const quantity = req.body.quantity;
+
+  const trents = new TrentsModel({
+    item: item,
+    quantity: quantity,
+  });
+  try {
+    await trents.save();
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/recipes/:id", async (req, res) => {

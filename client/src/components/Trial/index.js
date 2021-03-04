@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import Axios from "axios";
 import {
   OrdersContainer,
   TrentsArea,
@@ -41,15 +42,21 @@ const Trial = () => {
     reset: resetA,
   } = useForm();
 
-  const isEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
-  };
+  useEffect(async () => {
+    await Axios.get("http://localhost:3001/orders/trents").then((response) => {
+      setTrentsList(response.data);
+    });
+  }, [trentsList]);
 
-  const onSubmitT = (data) => {
-    let obj = { item: data.trents, quantity: data.trentsQ };
-    setTrentsList([...trentsList, obj]);
-    console.log(trentsList);
-    reset();
+  const onSubmitT = async (data) => {
+    await Axios.post("http://localhost:3001/orders/trents", {
+      item: data.trents,
+      quantity: data.trentsQ,
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        reset();
+      }
+    });
   };
 
   const onSubmitV = (data) => {
@@ -66,6 +73,11 @@ const Trial = () => {
     let obj = { item: data.asian, quantity: data.asianQ };
     setAsianList([...asianList, obj]);
     resetA();
+  };
+
+  const deleteTrentsItem = (item) => {
+    console.log(item);
+    let tList = [...trentsList];
   };
 
   return (
@@ -172,7 +184,18 @@ const Trial = () => {
               <li>No orders Yet.</li>
             ) : (
               trentsList.map((val, key) => {
-                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
+                return (
+                  <li key={key}>
+                    {`${val.item} x${val.quantity}`}{" "}
+                    <button
+                      onClick={() => {
+                        deleteTrentsItem(val.item);
+                      }}
+                    >
+                      X
+                    </button>
+                  </li>
+                );
               })
             )}
           </ul>
