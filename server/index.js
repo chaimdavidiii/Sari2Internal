@@ -23,16 +23,7 @@ mongoose.connect(
   }
 );
 
-// show recipes
-app.get("/read", async (req, res) => {
-  // RecipeModel.find({ $where: {title: "kare"}}, )
-  await RecipeModel.find({}, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
-    res.send(result);
-  });
-});
+// ORDERS
 
 // get trents orders
 app.get("/orders/trents", async (req, res) => {
@@ -60,6 +51,7 @@ app.post("/orders/trents", async (req, res) => {
     console.log(error);
   }
 });
+
 // get meat orders
 app.get("/orders/meat", async (req, res) => {
   await MeatModel.find({}, (err, result) => {
@@ -141,6 +133,48 @@ app.post("/orders/veggies", async (req, res) => {
   }
 });
 
+// delete trents item
+
+app.delete("/orders/trents/:id", async (req, res) => {
+  const id = req.params.id;
+  await TrentsModel.findByIdAndRemove(id).exec();
+  res.send("success");
+});
+
+// delete meat item
+app.delete("/orders/meat/:id", async (req, res) => {
+  const id = req.params.id;
+  await MeatModel.findByIdAndRemove(id).exec();
+  res.send("success");
+});
+
+// delete asian item
+app.delete("/orders/asian/:id", async (req, res) => {
+  const id = req.params.id;
+  await AsianModel.findByIdAndRemove(id).exec();
+  res.send("success");
+});
+
+// delete veggies item
+app.delete("/orders/veggies/:id", async (req, res) => {
+  const id = req.params.id;
+  await VeggiesModel.findByIdAndRemove(id).exec();
+  res.send("success");
+});
+
+//RECIPES
+
+// show recipes
+app.get("/read", async (req, res) => {
+  // RecipeModel.find({ $where: {title: "kare"}}, )
+  await RecipeModel.find({}, (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
+  });
+});
+
 // show particular recipe
 app.get("/recipes/:id", async (req, res) => {
   const id = req.params.id;
@@ -191,7 +225,7 @@ app.put("/recipes/update", async (req, res) => {
   }
 });
 
-//delete recipe
+// delete recipe
 app.delete("/recipes/delete/:id", async (req, res) => {
   const id = req.params.id;
   await RecipeModel.findByIdAndRemove(id).exec();
