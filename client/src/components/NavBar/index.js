@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { animateScroll as scroll } from "react-scroll";
+import AuthNav from "../auth-nav";
 import {
   Nav,
   NavbarContainer,
@@ -16,8 +18,9 @@ import {
   NavLinkZ,
 } from "./NavBarElements";
 
-function Navbar({ toggle }) {
+const Navbar = ({ toggle }) => {
   const [scrollNav, setScrollNav] = useState(false);
+  const location = useLocation();
 
   // when past particular point in page, function will trigger
   const changeNav = () => {
@@ -29,13 +32,27 @@ function Navbar({ toggle }) {
     }
   };
 
+  const navRecipe = () => {
+    setScrollNav(true);
+    window.removeEventListener("scroll", changeNav);
+  };
+
   const toggleHome = () => {
     scroll.scrollToTop();
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", changeNav);
-  }, []);
+    if (location.pathname === "/") {
+      window.addEventListener("scroll", changeNav);
+      console.log(location.pathname);
+    } else {
+      window.onload = navRecipe();
+      console.log(location.pathname);
+    }
+    return () => {
+      navRecipe();
+    };
+  }, [location.pathname]);
 
   return (
     <>
@@ -62,8 +79,8 @@ function Navbar({ toggle }) {
                 </NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks
-                  to='discover'
+                <NavLinkZ
+                  to='/order'
                   smooth={true}
                   duration={500}
                   spy={true}
@@ -71,7 +88,7 @@ function Navbar({ toggle }) {
                   offset={-80}
                 >
                   Orders
-                </NavLinks>
+                </NavLinkZ>
               </NavItem>
               <NavItem>
                 <NavLinkZ to='/recipes'>Recipes</NavLinkZ>
@@ -91,22 +108,13 @@ function Navbar({ toggle }) {
             </NavMenu>
             <NavBtn>
               {/* Username when logged in */}
-              <NavBtnLink
-                to='/signin'
-                smooth={true}
-                duration={500}
-                spy={true}
-                exact='true'
-                offset={-80}
-              >
-                Sign In
-              </NavBtnLink>
+              <AuthNav />
             </NavBtn>
           </NavbarContainer>
         </Nav>
       </IconContext.Provider>
     </>
   );
-}
+};
 
 export default Navbar;

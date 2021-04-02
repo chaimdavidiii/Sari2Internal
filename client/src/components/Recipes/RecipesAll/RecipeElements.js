@@ -28,7 +28,7 @@ export const SpanModal = styled.span`
   color: #ff0000;
 `;
 
-export const RecipeButtonAdd = styled(Button)`
+export const RecipeModalButton = styled(Button)`
   background-color: #808000;
 `;
 
@@ -37,7 +37,7 @@ export const RecipeWrapper = styled.div`
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
+  align-items: flex-start;
   grid-gap: 16px;
   padding: 0 50px;
 
@@ -71,19 +71,48 @@ export const RecipeCard = styled.div`
   }
 `;
 
-export const RecipeIcon = styled.img`
-  height: 240px;
-  width: 240px;
+export const RecipeIconWrapper = styled.div`
+  /* height: 240px;
+  width: 240px; */
+  padding: 0;
   margin-bottom: 10px;
 `;
 
 export const RecipeH1 = styled.h1`
   font-size: 2.5rem;
   color: #ff5500;
-  margin-bottom: 64px;
+  margin-top: 12px;
+  margin-bottom: 24px;
 
   @media screen and (max-width: 480px) {
     font-size: 2rem;
+  }
+`;
+
+export const RecipeAddContainer = styled.div`
+  margin-bottom: 10px;
+  justify-content: center;
+`;
+
+export const RecipeAddLink = styled(Link)`
+  border-radius: 50px;
+  background: #ff5500;
+  white-space: nowrap;
+  padding: 12px 30px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #fff;
+    color: #000000;
   }
 `;
 
@@ -137,7 +166,7 @@ export const RecipeLinkEdit = styled(Link)`
     text-decoration: none;
   }
 `;
-export const RecipeLinkDelete = styled(Link)`
+export const RecipeSpanDelete = styled.span`
   text-decoration: none;
   margin: 2px 2px;
   cursor: pointer;

@@ -1,4 +1,6 @@
 import React from "react";
+import AuthNav from "../auth-nav";
+import SignupLink from "../signup-link";
 import {
   SidebarContainer,
   Icon,
@@ -18,21 +20,23 @@ const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink onClick={toggle} to='about'>
+          <SidebarLink onClick={toggle} to='/'>
             Message Board
           </SidebarLink>
-          <SidebarLink onClick={toggle} to='discover'>
+          <SidebarLink onClick={toggle} to='/order'>
             Orders
           </SidebarLink>
-          <SidebarLink onClick={toggle} to='recipe'>
+          <SidebarLink onClick={toggle} to='/recipes'>
             Recipes
           </SidebarLink>
-          <SidebarLink onClick={toggle} to='signup'>
-            Sign Up
+          <SidebarLink>
+            <SignupLink />
           </SidebarLink>
         </SidebarMenu>
         <SideBtnWrap>
-          <SidebarRoute to='/signin'>Sign In</SidebarRoute>
+          <SidebarRoute>
+            <AuthNav />
+          </SidebarRoute>
         </SideBtnWrap>
       </SidebarWrapper>
     </SidebarContainer>

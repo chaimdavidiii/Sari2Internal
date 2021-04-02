@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
@@ -17,9 +17,12 @@ import {
   Errors,
   FormInputTextArea,
   FormButtonWrap,
+  FormInputFile,
 } from "./RecipesNewElements";
 
 const Signin = () => {
+  // const [fileInputState, setFileInputState] = useState("");
+  const [previewSource, setPreviewSource] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
   const history = useHistory();
 
@@ -30,17 +33,54 @@ const Signin = () => {
   const goback = () => {
     history.push("/recipes");
   };
-  const onSubmit = async (data) => {
-    await Axios.post("http://localhost:3001/recipes", {
-      title: data.title,
-      description: data.description,
-      ingredients: data.ingredients,
-    }).then((response) => {
-      if (response.statusText === "OK") {
-        goback();
-      }
-    });
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
   };
+
+  const previewFile = (file) => {
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+  const onSubmit = async (data) => {
+    try {
+      await Axios.post("http://localhost:3001/recipes", {
+        image: previewSource,
+        title: data.title,
+        description: data.description,
+        ingredients: data.ingredients,
+      }).then((response) => {
+        if (response.statusText === "OK") {
+          console.log("nicesu");
+          goback();
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // const trialSubmit = (data) => {
+  //   console.log("submitting...");
+  //   if (!previewSource) return;
+  //   uploadImage(previewSource);
+  // };
+
+  // const uploadImage = async (base64EncodedImage) => {
+  //   console.log(base64EncodedImage);
+  //   try {
+  //     await Axios.post("http://localhost:3001/api/upload", {
+  //       data: base64EncodedImage,
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <>
@@ -49,6 +89,20 @@ const Signin = () => {
           <Icon to='/'>Add a new Recipe</Icon>
           <FormContent>
             <Form onSubmit={handleSubmit(onSubmit)}>
+              <FormLabel>Image</FormLabel>
+              <FormInputFile
+                type='file'
+                id='file'
+                name='image'
+                onChange={handleFileInputChange}
+              />
+              {previewSource && (
+                <img
+                  src={previewSource}
+                  alt='imagePreview'
+                  style={{ height: "100px" }}
+                />
+              )}
               <FormLabel htmlFor='for'>Title</FormLabel>
               <FormInput
                 ref={register({

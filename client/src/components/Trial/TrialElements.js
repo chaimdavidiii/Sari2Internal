@@ -29,7 +29,7 @@ export const OrdersWrapper = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const Errors = styled.div`

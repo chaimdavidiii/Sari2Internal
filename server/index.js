@@ -8,8 +8,10 @@ const MeatModel = require("./models/Meat");
 const AsianModel = require("./models/Asian");
 const VeggiesModel = require("./models/Veggies");
 const cors = require("cors");
+const { cloudinary } = require("./utils/cloudinary");
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 
 mongoose.connect(
@@ -186,33 +188,57 @@ app.get("/recipes/:id", async (req, res) => {
   });
 });
 
+// // //cloudinary
+// app.post("/api/upload", async (req, res) => {
+//   try {
+//     const fileStr = req.body.data;
+//     const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+//       upload_preset: "sari2internal",
+//     });
+//     console.log(uploadedResponse);
+//     res.json({ msg: "YAYAYAYA!" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ err: "Something went wrong.." });
+//   }
+// });
+
 // post new recipe
 app.post("/recipes", async (req, res) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const ingredients = req.body.ingredients;
-
-  const recipe = new RecipeModel({
-    title: title,
-    description: description,
-    ingredients: ingredients,
-  });
   try {
+    const fileStr = req.body.image;
+    const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: "sari2internal",
+    });
+
+    const image = uploadedResponse.secure_url;
+    const image_Id = uploadedResponse.public_id;
+    const title = req.body.title;
+    const description = req.body.description;
+    const ingredients = req.body.ingredients;
+
+    const recipe = new RecipeModel({
+      title: title,
+      description: description,
+      ingredients: ingredients,
+      image: image,
+      image_Id: image_Id,
+    });
     await recipe.save();
     res.send("success");
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 });
 
 // update recipe
 app.put("/recipes/update", async (req, res) => {
-  const newTitle = req.body.newTitle;
-  const newDescription = req.body.newDescription;
-  const newIngredients = req.body.newIngredients;
-  const id = req.body.id;
+  if (req.body.image === undefined) {
+    const newTitle = req.body.newTitle;
+    const newDescription = req.body.newDescription;
+    const newIngredients = req.body.newIngredients;
+    const id = req.body.id;
 
-  try {
     await RecipeModel.findById(id, async (err, updatedRecipe) => {
       updatedRecipe.title = newTitle;
       updatedRecipe.description = newDescription;
@@ -220,16 +246,38 @@ app.put("/recipes/update", async (req, res) => {
       await updatedRecipe.save();
       res.send("success");
     });
-  } catch (error) {
-    console.log(err);
+  } else {
+    const fileStr = req.body.image;
+    await cloudinary.uploader.destroy(req.body.imageToDelete);
+    const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
+      upload_preset: "sari2internal",
+    });
+    const image = uploadedResponse.secure_url;
+    const image_Id = uploadedResponse.public_id;
+    const newTitle = req.body.newTitle;
+    const newDescription = req.body.newDescription;
+    const newIngredients = req.body.newIngredients;
+    const id = req.body.id;
+
+    await RecipeModel.findById(id, async (err, updatedRecipe) => {
+      updatedRecipe.image = image;
+      updatedRecipe.image_Id = image_Id;
+      updatedRecipe.title = newTitle;
+      updatedRecipe.description = newDescription;
+      updatedRecipe.ingredients = newIngredients;
+      await updatedRecipe.save();
+      res.send("success");
+    });
   }
 });
 
 // delete recipe
 app.delete("/recipes/delete/:id", async (req, res) => {
+  await cloudinary.uploader.destroy(req.body.imageidtoDelete);
   const id = req.params.id;
   await RecipeModel.findByIdAndRemove(id).exec();
   res.send("success");
 });
 
-app.listen(3001, () => console.log("Connected to server!"));
+const port = process.env.PORT || 3001;
+app.listen(port, () => console.log(`Connected to port ${port}!`));

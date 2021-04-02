@@ -19,10 +19,13 @@ const RecipeSchema = new mongoose.Schema({
   cookingProcedure: {
     type: String,
   },
-  plating: {
+  garnish: {
     type: String,
   },
   image: {
+    type: String,
+  },
+  image_Id: {
     type: String,
   },
 });

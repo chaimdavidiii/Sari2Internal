@@ -47,6 +47,21 @@ const Trial = () => {
       setTrentsList(response.data);
     });
   }, [trentsList]);
+  useEffect(async () => {
+    await Axios.get("http://localhost:3001/orders/veggies").then((response) => {
+      setVeggiesList(response.data);
+    });
+  }, [veggiesList]);
+  useEffect(async () => {
+    await Axios.get("http://localhost:3001/orders/asian").then((response) => {
+      setAsianList(response.data);
+    });
+  }, [asianList]);
+  useEffect(async () => {
+    await Axios.get("http://localhost:3001/orders/meat").then((response) => {
+      setMeatList(response.data);
+    });
+  }, [meatList]);
 
   const onSubmitT = async (data) => {
     await Axios.post("http://localhost:3001/orders/trents", {
@@ -59,25 +74,72 @@ const Trial = () => {
     });
   };
 
-  const onSubmitV = (data) => {
-    let obj = { item: data.veggies, quantity: data.veggiesQ };
-    setVeggiesList([...veggiesList, obj]);
-    resetV();
+  const onSubmitV = async (data) => {
+    await Axios.post("http://localhost:3001/orders/veggies", {
+      item: data.veggies,
+      quantity: data.veggiesQ,
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        resetV();
+      }
+    });
   };
-  const onSubmitM = (data) => {
-    let obj = { item: data.meat, quantity: data.meatQ };
-    setMeatList([...meatList, obj]);
-    resetM();
+  const onSubmitM = async (data) => {
+    await Axios.post("http://localhost:3001/orders/meat", {
+      item: data.meat,
+      quantity: data.meatQ,
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        resetM();
+      }
+    });
   };
-  const onSubmitA = (data) => {
-    let obj = { item: data.asian, quantity: data.asianQ };
-    setAsianList([...asianList, obj]);
-    resetA();
+  const onSubmitA = async (data) => {
+    await Axios.post("http://localhost:3001/orders/asian", {
+      item: data.asian,
+      quantity: data.asianQ,
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        resetA();
+      }
+    });
   };
 
-  const deleteTrentsItem = (item) => {
-    console.log(item);
-    let tList = [...trentsList];
+  const deleteTrentsItem = async (id) => {
+    await Axios.delete(`http://localhost:3001/orders/trents/${id}`).then(
+      (response) => {
+        if (response.statusText === "OK") {
+          console.log(response);
+        }
+      }
+    );
+  };
+  const deleteMeatItem = async (id) => {
+    await Axios.delete(`http://localhost:3001/orders/meat/${id}`).then(
+      (response) => {
+        if (response.statusText === "OK") {
+          console.log(response);
+        }
+      }
+    );
+  };
+  const deleteVeggiesItem = async (id) => {
+    await Axios.delete(`http://localhost:3001/orders/veggies/${id}`).then(
+      (response) => {
+        if (response.statusText === "OK") {
+          console.log(response);
+        }
+      }
+    );
+  };
+  const deleteAsianItem = async (id) => {
+    await Axios.delete(`http://localhost:3001/orders/asian/${id}`).then(
+      (response) => {
+        if (response.statusText === "OK") {
+          console.log(response);
+        }
+      }
+    );
   };
 
   return (
@@ -106,6 +168,26 @@ const Trial = () => {
             />
             <button type='submit'>Add</button>
           </form>
+          <ul>
+            {trentsList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              trentsList.map((val, key) => {
+                return (
+                  <li key={key}>
+                    {`${val.item} x${val.quantity}`}{" "}
+                    <button
+                      onClick={() => {
+                        deleteTrentsItem(val._id);
+                      }}
+                    >
+                      X
+                    </button>
+                  </li>
+                );
+              })
+            )}
+          </ul>
         </TrentsArea>
         <VeggiesArea>
           <form onSubmit={handleSubmitV(onSubmitV)}>
@@ -127,6 +209,26 @@ const Trial = () => {
             />
             <button type='submit'>Add</button>
           </form>
+          <ul>
+            {veggiesList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              veggiesList.map((val, key) => {
+                return (
+                  <li key={key}>
+                    {`${val.item} x${val.quantity}`}{" "}
+                    <button
+                      onClick={() => {
+                        deleteVeggiesItem(val._id);
+                      }}
+                    >
+                      X
+                    </button>
+                  </li>
+                );
+              })
+            )}
+          </ul>
         </VeggiesArea>
         <MeatArea onSubmit={handleSubmitM(onSubmitM)}>
           <form>
@@ -148,6 +250,26 @@ const Trial = () => {
             />
             <button type='submit'>Add</button>
           </form>
+          <ul>
+            {meatList.length === 0 ? (
+              <li>No orders Yet.</li>
+            ) : (
+              meatList.map((val, key) => {
+                return (
+                  <li key={key}>
+                    {`${val.item} x${val.quantity}`}{" "}
+                    <button
+                      onClick={() => {
+                        deleteMeatItem(val._id);
+                      }}
+                    >
+                      X
+                    </button>
+                  </li>
+                );
+              })
+            )}
+          </ul>
         </MeatArea>
         <AsianArea onSubmit={handleSubmitA(onSubmitA)}>
           <form>
@@ -170,26 +292,17 @@ const Trial = () => {
 
             <button type='submit'>Add</button>
           </form>
-        </AsianArea>
-      </OrdersWrapper>
-
-      <TotalTag>
-        <OrdersTitle>Total:</OrdersTitle>
-      </TotalTag>
-      <TotalOrders>
-        <TrentsArea>
-          <OrdersTotalText>Trents</OrdersTotalText>
           <ul>
-            {trentsList.length === 0 ? (
+            {asianList.length === 0 ? (
               <li>No orders Yet.</li>
             ) : (
-              trentsList.map((val, key) => {
+              asianList.map((val, key) => {
                 return (
                   <li key={key}>
                     {`${val.item} x${val.quantity}`}{" "}
                     <button
                       onClick={() => {
-                        deleteTrentsItem(val.item);
+                        deleteAsianItem(val._id);
                       }}
                     >
                       X
@@ -199,44 +312,8 @@ const Trial = () => {
               })
             )}
           </ul>
-        </TrentsArea>
-        <VeggiesArea>
-          <OrdersTotalText>Veggies</OrdersTotalText>
-          <ul>
-            {veggiesList.length === 0 ? (
-              <li>No orders Yet.</li>
-            ) : (
-              veggiesList.map((val, key) => {
-                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
-              })
-            )}
-          </ul>
-        </VeggiesArea>
-        <MeatArea>
-          <OrdersTotalText>Meat</OrdersTotalText>
-          <ul>
-            {meatList.length === 0 ? (
-              <li>No orders Yet.</li>
-            ) : (
-              meatList.map((val, key) => {
-                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
-              })
-            )}
-          </ul>
-        </MeatArea>
-        <AsianArea>
-          <OrdersTotalText>Asian</OrdersTotalText>
-          <ul>
-            {asianList.length === 0 ? (
-              <li>No orders Yet.</li>
-            ) : (
-              asianList.map((val, key) => {
-                return <li key={key}>{`${val.item} x${val.quantity}`}</li>;
-              })
-            )}
-          </ul>
         </AsianArea>
-      </TotalOrders>
+      </OrdersWrapper>
     </OrdersContainer>
   );
 };

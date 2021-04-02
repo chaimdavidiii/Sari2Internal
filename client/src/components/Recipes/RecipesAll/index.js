@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/modal";
-import RecipesNav from "../RecipesNav";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiShow } from "react-icons/bi";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { IconContext } from "react-icons";
-import RecipesSideBar from "../RecipesSideBar";
+import { Image } from "cloudinary-react";
 
 import {
   RecipeContainer,
   RecipeH1,
   RecipeWrapper,
   RecipeCard,
-  RecipeIcon,
   RecipeTitle,
   RecipeP,
   RecipeActions,
   RecipeLinkView,
   RecipeLinkEdit,
-  RecipeLinkDelete,
-  RecipeButtonAdd,
+  RecipeSpanDelete,
+  RecipeModalButton,
+  RecipeAddContainer,
+  RecipeAddLink,
   SpanModal,
   ModalContainer,
+  RecipeIconWrapper,
 } from "./RecipeElements";
 
 const Recipe = () => {
@@ -31,33 +32,35 @@ const Recipe = () => {
   const [show, setShow] = useState(false);
   const [deleteTitle, setDeleteTitle] = useState("");
   const [deleteID, setDeleteID] = useState("");
+  const [deleteImage_Id, setDeleteImage_Id] = useState("");
   const history = useHistory();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleClose = () => setShow(false);
-  const handleShow = (id, title) => {
+
+  const handleShow = (id, title, deleteImage) => {
     setShow(true);
+    console.log(show);
+    setDeleteImage_Id(deleteImage);
     setDeleteTitle(title);
     setDeleteID(id);
   };
 
   const deleteRecipe = () => {
-    Axios.delete(`http://localhost:3001/recipes/delete/${deleteID}`).then(
-      (response) => {
-        if (response.statusText === "OK") {
-          handleClose();
-          goback();
-        }
+    console.log(deleteImage_Id);
+    Axios.delete(`http://localhost:3001/recipes/delete/${deleteID}`, {
+      data: {
+        imageidtoDelete: deleteImage_Id,
+      },
+    }).then((response) => {
+      if (response.statusText === "OK") {
+        handleClose();
+        goback();
       }
-    );
+    });
   };
 
   const goback = () => {
-    history.push("/trial");
+    history.push("/recipes");
   };
 
   useEffect(() => {
@@ -72,8 +75,6 @@ const Recipe = () => {
 
   return (
     <>
-      <RecipesSideBar isOpen={isOpen} toggle={toggle} />
-      <RecipesNav toggle={toggle} />
       <RecipeContainer>
         <ModalContainer>
           <Modal show={show} onHide={handleClose}>
@@ -84,24 +85,33 @@ const Recipe = () => {
             </Modal.Header>
             <Modal.Body>Are you sure you want to delete this?</Modal.Body>
             <Modal.Footer>
-              <RecipeButtonAdd variant='primary' onClick={deleteRecipe}>
+              <RecipeModalButton variant='primary' onClick={deleteRecipe}>
                 Yes
-              </RecipeButtonAdd>
-              <RecipeButtonAdd variant='secondary' onClick={handleClose}>
+              </RecipeModalButton>
+              <RecipeModalButton variant='secondary' onClick={handleClose}>
                 No
-              </RecipeButtonAdd>
+              </RecipeModalButton>
             </Modal.Footer>
           </Modal>
         </ModalContainer>
 
         <RecipeH1>The Recipes</RecipeH1>
+        <RecipeAddContainer>
+          <RecipeAddLink to='/recipes/new'>Add a Recipe</RecipeAddLink>
+        </RecipeAddContainer>
         <RecipeWrapper>
           {recipeList.map((val, key) => {
             return (
               <RecipeCard>
-                <RecipeIcon
-                  src={require("../../images/default-image.jpg").default}
-                />
+                <RecipeIconWrapper>
+                  <Image
+                    cloudName={process.env.REACT_APP_CLOUD_NAME}
+                    publicId={val.image_Id}
+                    width='240'
+                    height='240'
+                    crop='scale'
+                  />
+                </RecipeIconWrapper>
                 <h3>Title:</h3>
                 <RecipeTitle>{val.title}</RecipeTitle>
                 <h3>Description:</h3>
@@ -116,12 +126,14 @@ const Recipe = () => {
                     <RecipeLinkEdit to={`/recipes/${val._id}/edit`}>
                       <AiTwotoneEdit />
                     </RecipeLinkEdit>
-                    <RecipeLinkDelete
+                    <RecipeSpanDelete
                       // to={"/recipes"}
-                      onClick={() => handleShow(val._id, val.title)}
+                      onClick={() =>
+                        handleShow(val._id, val.title, val.image_Id)
+                      }
                     >
                       <BsFillTrashFill />
-                    </RecipeLinkDelete>
+                    </RecipeSpanDelete>
                   </IconContext.Provider>
                 </RecipeActions>
               </RecipeCard>

@@ -4,6 +4,7 @@ import {
   FormContent,
   FormH1,
   FormInput,
+  FormInputFile,
   FormWrap,
   Icon,
   Form,
@@ -15,43 +16,71 @@ import {
   FormInputTextArea,
   FormButtonWrap,
 } from "./RecipesEditElements";
-import Button from "react-bootstrap/Button";
 import Axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function EditRecipe() {
+  const [recipe, setRecipe] = useState([]);
+  const [previewSource, setPreviewSource] = useState("");
+  const [image_Id, setImage_Id] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
-  const [recipe, setRecipe] = useState({});
   const { id } = useParams();
   const history = useHistory();
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/recipes/${id}`).then((response) => {
       setRecipe(response.data);
+      setImage_Id(response.data.image_Id);
     });
-  }, [id]);
+  }, []);
 
   useEffect(() => window.scrollTo(0, 0));
 
-  const goToRecipes = () => {
+  const goBack = () => {
     history.push("/recipes");
   };
 
-  const onSubmit = async (data) => {
-    await Axios.put("http://localhost:3001/recipes/update", {
-      id: id,
-      newTitle: data.title,
-      newDescription: data.description,
-      newIngredients: data.ingredients,
-    }).then((response) => {
-      if (response.statusText === "OK") {
-        goToRecipes();
-      }
-    });
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
   };
-  const goBack = () => {
-    history.goBack();
+
+  const previewFile = (file) => {
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const onSubmit = async (data) => {
+    if (!previewSource) {
+      await Axios.put("http://localhost:3001/recipes/update", {
+        id: id,
+        newTitle: data.title,
+        newDescription: data.description,
+        newIngredients: data.ingredients,
+      }).then((response) => {
+        if (response.statusText === "OK") {
+          goBack();
+        }
+      });
+    } else {
+      await Axios.put("http://localhost:3001/recipes/update", {
+        image: previewSource,
+        imageToDelete: image_Id,
+        id: id,
+        newTitle: data.title,
+        newDescription: data.description,
+        newIngredients: data.ingredients,
+      }).then((response) => {
+        if (response.statusText === "OK") {
+          goBack();
+        }
+      });
+    }
   };
 
   return (
@@ -61,6 +90,19 @@ function EditRecipe() {
           <Icon to='/'>Edit '{recipe.title}'</Icon>
           <FormContent>
             <Form onSubmit={handleSubmit(onSubmit)}>
+              <FormLabel>Image</FormLabel>
+              <FormInputFile
+                type='file'
+                name='image'
+                onChange={handleFileInputChange}
+              />
+              {previewSource && (
+                <img
+                  src={previewSource}
+                  alt='imagePreview'
+                  style={{ height: "100px" }}
+                />
+              )}
               <FormLabel htmlFor='for'>Title</FormLabel>
               <FormInput
                 ref={register({
