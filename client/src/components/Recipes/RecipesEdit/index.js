@@ -38,6 +38,10 @@ function EditRecipe() {
   useEffect(() => window.scrollTo(0, 0));
 
   const goBack = () => {
+    history.push(`recipes/${recipe._id}`);
+  };
+
+  const saveEdit = () => {
     history.push("/recipes");
   };
 
@@ -64,7 +68,7 @@ function EditRecipe() {
         newIngredients: data.ingredients,
       }).then((response) => {
         if (response.statusText === "OK") {
-          goBack();
+          saveEdit();
         }
       });
     } else {
@@ -77,7 +81,7 @@ function EditRecipe() {
         newIngredients: data.ingredients,
       }).then((response) => {
         if (response.statusText === "OK") {
-          goBack();
+          saveEdit();
         }
       });
     }
@@ -169,7 +173,9 @@ function EditRecipe() {
                 >
                   Reset
                 </FormButtonReset>
-                <FormButtonBack onClick={goBack}>Back</FormButtonBack>
+                <FormButtonBack to={`/recipes/${recipe._id}`}>
+                  Back
+                </FormButtonBack>
               </FormButtonWrap>
             </Form>
           </FormContent>

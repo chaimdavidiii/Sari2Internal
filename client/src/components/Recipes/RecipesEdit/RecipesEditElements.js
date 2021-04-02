@@ -148,7 +148,15 @@ export const FormButtonReset = styled.button`
   font-size: 20px;
   cursor: pointer;
 `;
-export const FormButtonBack = styled.button`
+export const FormButtonBack = styled(Link)`
+  /* justify-content: center;
+  align-self: center;
+  align-items: center; */
+  height: 85%;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
   background: #ff5500;
   width: 100%;
   margin-top: 8px;
@@ -157,6 +165,11 @@ export const FormButtonBack = styled.button`
   color: #fff;
   font-size: 20px;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    color: #fff;
+  }
 `;
 
 export const Text = styled.span`

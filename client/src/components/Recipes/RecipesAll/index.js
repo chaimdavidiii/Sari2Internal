@@ -102,54 +102,23 @@ const Recipe = () => {
         <RecipeWrapper>
           {recipeList.map((val, key) => {
             return (
-              <RecipeCard>
-                <RecipeIconWrapper>
-                  <Image
-                    cloudName={process.env.REACT_APP_CLOUD_NAME}
-                    publicId={val.image_Id}
-                    width='240'
-                    height='240'
-                    crop='scale'
-                  />
-                </RecipeIconWrapper>
-                <h3>Title:</h3>
-                <RecipeTitle>{val.title}</RecipeTitle>
-                <h3>Description:</h3>
-                <RecipeP>{val.description}</RecipeP>
-                <h3>Ingredients:</h3>
-                <RecipeP>{val.ingredients}</RecipeP>
-                <RecipeActions>
-                  <IconContext.Provider value={{ size: "1.5em" }}>
-                    <RecipeLinkView to={`/recipes/${val._id}`}>
-                      <BiShow />
-                    </RecipeLinkView>
-                    <RecipeLinkEdit to={`/recipes/${val._id}/edit`}>
-                      <AiTwotoneEdit />
-                    </RecipeLinkEdit>
-                    <RecipeSpanDelete
-                      // to={"/recipes"}
-                      onClick={() =>
-                        handleShow(val._id, val.title, val.image_Id)
-                      }
-                    >
-                      <BsFillTrashFill />
-                    </RecipeSpanDelete>
-                  </IconContext.Provider>
-                </RecipeActions>
-              </RecipeCard>
+              <RecipeLinkView to={`/recipes/${val._id}`}>
+                <RecipeCard>
+                  <RecipeIconWrapper>
+                    <Image
+                      cloudName={process.env.REACT_APP_CLOUD_NAME}
+                      publicId={val.image_Id}
+                      width='240'
+                      height='240'
+                      crop='scale'
+                    />
+                  </RecipeIconWrapper>
+                  <RecipeTitle>{val.title}</RecipeTitle>
+                </RecipeCard>
+              </RecipeLinkView>
             );
           })}
         </RecipeWrapper>
-        {/* <RecipeCard>
-          <RecipeIcon src={require("../images/sari2.svg").default} />
-          <RecipeTitle>Reduce Expenses</RecipeTitle>
-          <RecipeP>Blah blah blah</RecipeP>
-        </RecipeCard>
-        <RecipeCard>
-          <RecipeIcon src={require("../images/sari3.svg").default} />
-          <RecipeTitle>Reduce Expenses</RecipeTitle>
-          <RecipeP>Blah blah blah</RecipeP>
-        </RecipeCard> */}
       </RecipeContainer>
     </>
   );
