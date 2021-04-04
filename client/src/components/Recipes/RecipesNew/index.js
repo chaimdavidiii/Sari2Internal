@@ -21,7 +21,6 @@ import {
 } from "./RecipesNewElements";
 
 const Signin = () => {
-  // const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
   const history = useHistory();
@@ -81,7 +80,6 @@ const Signin = () => {
   //     console.error(error);
   //   }
   // };
-
   return (
     <>
       <Container>

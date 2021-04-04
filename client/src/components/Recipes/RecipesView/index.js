@@ -63,6 +63,10 @@ function ViewRecipe() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  useEffect(() => {
     Axios.get(`http://localhost:3001/recipes/${id}`).then((response) => {
       console.log(response);
       setRecipe(response.data);
@@ -111,7 +115,7 @@ function ViewRecipe() {
               {recipe.ingredients}
             </RecipeTextArea>
             <RecipeButtonContainer>
-              <IconContext.Provider value={{ size: "1.5em" }}>
+              <IconContext.Provider value={{ size: "2rem" }}>
                 <RecipeButtonBack
                   onClick={() => {
                     goBack();

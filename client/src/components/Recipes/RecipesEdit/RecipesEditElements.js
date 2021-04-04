@@ -129,46 +129,45 @@ export const FormButtonWrap = styled.div`
 `;
 
 export const FormButtonAdd = styled.button`
-  background: #0000ff;
   width: 100%;
+  background: transparent;
   margin-top: 8px;
   border: none;
   border-radius: 10px;
-  color: #fff;
+  color: #000000;
   font-size: 20px;
   cursor: pointer;
+
+  &:hover {
+    color: #008000;
+  }
 `;
-export const FormButtonReset = styled.button`
-  background: #ff0000;
-  width: 100%;
-  margin-top: 8px;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-`;
+// export const FormButtonReset = styled.button`
+//   background: #ff0000;
+//   width: 100%;
+//   margin-top: 8px;
+//   border: none;
+//   border-radius: 10px;
+//   color: #fff;
+//   font-size: 20px;
+//   cursor: pointer;
+// `;
 export const FormButtonBack = styled(Link)`
-  /* justify-content: center;
-  align-self: center;
-  align-items: center; */
-  height: 85%;
   justify-content: center;
   align-items: center;
   align-self: center;
   text-align: center;
-  background: #ff5500;
   width: 100%;
   margin-top: 8px;
   border: none;
   border-radius: 10px;
-  color: #fff;
+  color: #000000;
   font-size: 20px;
   cursor: pointer;
 
   &:hover {
     text-decoration: none;
-    color: #fff;
+    color: #ff0000;
   }
 `;
 

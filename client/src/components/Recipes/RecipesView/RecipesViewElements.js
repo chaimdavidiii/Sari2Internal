@@ -62,7 +62,7 @@ export const RecipeTextArea = styled.p`
 
 export const RecipeButtonContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 60px;
   justify-content: center;
 `;
 

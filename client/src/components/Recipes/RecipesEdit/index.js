@@ -18,7 +18,10 @@ import {
 } from "./RecipesEditElements";
 import Axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
+import { AiOutlineSave } from "react-icons/ai";
+import { BiArrowBack } from "react-icons/bi";
 import { useForm } from "react-hook-form";
+import { IconContext } from "react-icons";
 
 function EditRecipe() {
   const [recipe, setRecipe] = useState([]);
@@ -165,17 +168,14 @@ function EditRecipe() {
                   <Errors>Must be more than 5 characters!</Errors>
                 )}
               <FormButtonWrap>
-                <FormButtonAdd type='submit'>Save</FormButtonAdd>
-                <FormButtonReset
-                  onClick={() => {
-                    reset();
-                  }}
-                >
-                  Reset
-                </FormButtonReset>
-                <FormButtonBack to={`/recipes/${recipe._id}`}>
-                  Back
-                </FormButtonBack>
+                <IconContext.Provider value={{ size: "2rem" }}>
+                  <FormButtonAdd type='submit'>
+                    <AiOutlineSave />
+                  </FormButtonAdd>
+                  <FormButtonBack to={`/recipes/${recipe._id}`}>
+                    <BiArrowBack />
+                  </FormButtonBack>
+                </IconContext.Provider>
               </FormButtonWrap>
             </Form>
           </FormContent>
