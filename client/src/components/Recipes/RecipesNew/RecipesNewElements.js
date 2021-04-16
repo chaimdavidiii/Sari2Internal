@@ -15,6 +15,13 @@ export const Container = styled.div`
   background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 100%);
 `;
 
+export const LoaderContainer = styled.div`
+  text-align: center;
+  align-items: center;
+  margin-top: 200px;
+  color: #000000;
+`;
+
 export const Errors = styled.div`
   color: #ff0000;
   margin-bottom: 16px;
@@ -38,7 +45,7 @@ export const FormWrap = styled.div`
   }
 `;
 
-export const Icon = styled(Link)`
+export const Icon = styled.h1`
   align-self: center;
   margin-left: 32px;
   margin-top: 32px;

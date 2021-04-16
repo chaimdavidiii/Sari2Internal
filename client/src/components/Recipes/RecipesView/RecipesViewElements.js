@@ -47,11 +47,13 @@ export const RecipeBody = styled.div`
 `;
 
 export const RecipeImage = styled.div`
+  text-align: center;
   height: 400px;
   width: 500px;
 `;
 
 export const RecipeTitle = styled.h1`
+  text-align: center;
   align-self: center;
   font-size: 2.5rem;
 `;

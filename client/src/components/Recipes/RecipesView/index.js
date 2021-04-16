@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Axios from "axios";
 import Modal from "react-bootstrap/modal";
 import { IconContext } from "react-icons";
@@ -64,7 +62,7 @@ function ViewRecipe() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/recipes/${id}`).then((response) => {
@@ -95,6 +93,7 @@ function ViewRecipe() {
           </Modal>
         </ModalContainer>
         <RecipeCard>
+          <RecipeTitle>"{recipe.title}"</RecipeTitle>
           <RecipeBody>
             <RecipeImage>
               <Image
@@ -105,7 +104,7 @@ function ViewRecipe() {
                 crop='scale'
               />
             </RecipeImage>
-            <RecipeTitle>"{recipe.title}"</RecipeTitle>
+
             <RecipeTextArea>
               <h4>Description:</h4>
               {recipe.description}

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
+import DotLoader from "react-spinners/DotLoader";
 import {
   Container,
   FormContent,
   FormH1,
   FormInput,
+  LoaderContainer,
   FormWrap,
   Icon,
   Form,
@@ -22,6 +24,7 @@ import {
 
 const Signin = () => {
   const [previewSource, setPreviewSource] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm();
   const history = useHistory();
 
@@ -48,7 +51,8 @@ const Signin = () => {
   };
   const onSubmit = async (data) => {
     try {
-      await Axios.post("http://localhost:3001/recipes", {
+      setLoading(true);
+      const thedata = await Axios.post("http://localhost:3001/recipes", {
         image: previewSource,
         title: data.title,
         description: data.description,
@@ -64,110 +68,104 @@ const Signin = () => {
     }
   };
 
-  // const trialSubmit = (data) => {
-  //   console.log("submitting...");
-  //   if (!previewSource) return;
-  //   uploadImage(previewSource);
-  // };
-
-  // const uploadImage = async (base64EncodedImage) => {
-  //   console.log(base64EncodedImage);
-  //   try {
-  //     await Axios.post("http://localhost:3001/api/upload", {
-  //       data: base64EncodedImage,
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   return (
     <>
       <Container>
         <FormWrap>
-          <Icon to='/'>Add a new Recipe</Icon>
-          <FormContent>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <FormLabel>Image</FormLabel>
-              <FormInputFile
-                type='file'
-                id='file'
-                name='image'
-                onChange={handleFileInputChange}
-              />
-              {previewSource && (
-                <img
-                  src={previewSource}
-                  alt='imagePreview'
-                  style={{ height: "100px" }}
-                />
-              )}
-              <FormLabel htmlFor='for'>Title</FormLabel>
-              <FormInput
-                ref={register({
-                  required: true,
-                  minLength: 4,
-                })}
-                type='text'
-                name='title'
-                placeholder='Title..'
-              />
-              {errors.title && errors.title.type === "required" && (
-                <Errors>Title is Required!</Errors>
-              )}
-              {errors.title && errors.title.type === "minLength" && (
-                <Errors>Must be more than 4 characters!</Errors>
-              )}
+          {loading ? (
+            <LoaderContainer>
+              <DotLoader loading={loading} size={150} />
+            </LoaderContainer>
+          ) : (
+            <>
+              <Icon to='/'>Add a new Recipe</Icon>
+              <FormContent>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <FormLabel>Image</FormLabel>
+                  <FormInputFile
+                    type='file'
+                    id='file'
+                    name='image'
+                    onChange={handleFileInputChange}
+                  />
+                  {previewSource && (
+                    <img
+                      src={previewSource}
+                      alt='imagePreview'
+                      style={{ height: "100px" }}
+                    />
+                  )}
+                  <FormLabel htmlFor='for'>Title</FormLabel>
+                  <FormInput
+                    ref={register({
+                      required: true,
+                      minLength: 4,
+                    })}
+                    type='text'
+                    name='title'
+                    placeholder='Title..'
+                  />
+                  {errors.title && errors.title.type === "required" && (
+                    <Errors>Title is Required!</Errors>
+                  )}
+                  {errors.title && errors.title.type === "minLength" && (
+                    <Errors>Must be more than 4 characters!</Errors>
+                  )}
 
-              <FormLabel htmlFor='for'>Description</FormLabel>
-              <FormInputTextArea
-                rows={4}
-                ref={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                name='description'
-                as='textarea'
-                placeholder='Description..'
-              ></FormInputTextArea>
-              {errors.description && errors.description.type === "required" && (
-                <Errors>Description is required!</Errors>
-              )}
-              {errors.description &&
-                errors.description.type === "minLength" && (
-                  <Errors>Must be more than 5 characters!</Errors>
-                )}
+                  <FormLabel htmlFor='for'>Description</FormLabel>
+                  <FormInputTextArea
+                    rows={4}
+                    ref={register({
+                      required: true,
+                      minLength: 5,
+                    })}
+                    name='description'
+                    as='textarea'
+                    placeholder='Description..'
+                  ></FormInputTextArea>
+                  {errors.description &&
+                    errors.description.type === "required" && (
+                      <Errors>Description is required!</Errors>
+                    )}
+                  {errors.description &&
+                    errors.description.type === "minLength" && (
+                      <Errors>Must be more than 5 characters!</Errors>
+                    )}
 
-              <FormLabel htmlFor='for'>Ingredients</FormLabel>
-              <FormInputTextArea
-                rows={4}
-                ref={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                name='ingredients'
-                as='textarea'
-                placeholder='Ingredients..'
-              ></FormInputTextArea>
-              {errors.description && errors.description.type === "required" && (
-                <Errors>Ingredients field is required!</Errors>
-              )}
-              {errors.description &&
-                errors.description.type === "minLength" && (
-                  <Errors>Must be more than 5 characters!</Errors>
-                )}
-              <FormButtonWrap>
-                <FormButtonAdd type='submit'>Add</FormButtonAdd>
-                <FormButtonReset
-                  onClick={() => {
-                    reset();
-                  }}
-                >
-                  Reset
-                </FormButtonReset>
-                <FormButtonBack onClick={goback}>Back</FormButtonBack>
-              </FormButtonWrap>
-            </Form>
-          </FormContent>
+                  <FormLabel htmlFor='for'>Ingredients</FormLabel>
+                  <FormInputTextArea
+                    rows={4}
+                    ref={register({
+                      required: true,
+                      minLength: 5,
+                    })}
+                    name='ingredients'
+                    as='textarea'
+                    placeholder='Ingredients..'
+                  ></FormInputTextArea>
+                  {errors.description &&
+                    errors.description.type === "required" && (
+                      <Errors>Ingredients field is required!</Errors>
+                    )}
+                  {errors.description &&
+                    errors.description.type === "minLength" && (
+                      <Errors>Must be more than 5 characters!</Errors>
+                    )}
+                  <FormButtonWrap>
+                    <FormButtonAdd type='submit'>Add</FormButtonAdd>
+                    <FormButtonReset
+                      onClick={() => {
+                        reset();
+                      }}
+                    >
+                      Reset
+                    </FormButtonReset>
+                    <FormButtonBack onClick={goback}>Back</FormButtonBack>
+                  </FormButtonWrap>
+                </Form>
+              </FormContent>
+            </>
+          )}
         </FormWrap>
       </Container>
     </>

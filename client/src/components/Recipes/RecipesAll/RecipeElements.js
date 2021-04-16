@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 export const RecipeContainer = styled.div`
+  margin-bottom: 0;
+  padding-bottom: 0;
   margin-top: 80px;
   height: 100%;
   display: flex;
