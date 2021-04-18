@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import DotLoader from "react-spinners/DotLoader";
+import PulseLoader from "react-spinners/PulseLoader";
 import {
   Container,
   FormContent,
@@ -27,6 +27,8 @@ const Signin = () => {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, errors, reset } = useForm();
   const history = useHistory();
+
+  const loaderColor = "#ff5500";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -74,7 +76,7 @@ const Signin = () => {
         <FormWrap>
           {loading ? (
             <LoaderContainer>
-              <DotLoader loading={loading} size={150} />
+              <PulseLoader color={loaderColor} loading={loading} size={120} />
             </LoaderContainer>
           ) : (
             <>

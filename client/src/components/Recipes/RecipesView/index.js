@@ -6,6 +6,7 @@ import { IconContext } from "react-icons";
 import { BsFillTrashFill } from "react-icons/bs";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
+import PulseLoader from "react-spinners/PulseLoader";
 import {
   RecipeContainer,
   RecipeCard,
@@ -14,6 +15,7 @@ import {
   RecipeTitle,
   RecipeTextArea,
   RecipeButtonContainer,
+  LoaderContainer,
   RecipeButtonBack,
   RecipeButtonEdit,
   RecipeButtonDelete,
@@ -25,6 +27,7 @@ import { Image } from "cloudinary-react";
 
 function ViewRecipe() {
   const [recipe, setRecipe] = useState({});
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [deleteTitle, setDeleteTitle] = useState("");
   const [deleteID, setDeleteID] = useState("");
@@ -32,10 +35,13 @@ function ViewRecipe() {
   const { id } = useParams();
   const history = useHistory();
 
+  const loaderColor = "#ff5500";
+
   const handleClose = () => setShow(false);
 
   const deleteRecipe = () => {
-    console.log(deleteImage_Id);
+    setShow(false);
+    setLoading(true);
     Axios.delete(`http://localhost:3001/recipes/delete/${deleteID}`, {
       data: {
         imageidtoDelete: deleteImage_Id,
@@ -92,50 +98,58 @@ function ViewRecipe() {
             </Modal.Footer>
           </Modal>
         </ModalContainer>
-        <RecipeCard>
-          <RecipeTitle>"{recipe.title}"</RecipeTitle>
-          <RecipeBody>
-            <RecipeImage>
-              <Image
-                cloudName={process.env.REACT_APP_CLOUD_NAME}
-                publicId={recipe.image_Id}
-                width='490'
-                height='390'
-                crop='scale'
-              />
-            </RecipeImage>
+        {loading ? (
+          <LoaderContainer>
+            <PulseLoader color={loaderColor} loading={loading} size={120} />
+          </LoaderContainer>
+        ) : (
+          <>
+            <RecipeTitle>"{recipe.title}"</RecipeTitle>
+            <RecipeCard>
+              <RecipeBody>
+                <RecipeImage>
+                  <Image
+                    cloudName={process.env.REACT_APP_CLOUD_NAME}
+                    publicId={recipe.image_Id}
+                    width='490'
+                    height='390'
+                    crop='scale'
+                  />
+                </RecipeImage>
 
-            <RecipeTextArea>
-              <h4>Description:</h4>
-              {recipe.description}
-            </RecipeTextArea>
-            <RecipeTextArea>
-              <h4>Ingredients:</h4>
-              {recipe.ingredients}
-            </RecipeTextArea>
-            <RecipeButtonContainer>
-              <IconContext.Provider value={{ size: "2rem" }}>
-                <RecipeButtonBack
-                  onClick={() => {
-                    goBack();
-                  }}
-                >
-                  <BiArrowBack />
-                </RecipeButtonBack>
-                <RecipeButtonEdit to={`/recipes/${recipe._id}/edit`}>
-                  <AiTwotoneEdit />
-                </RecipeButtonEdit>
-                <RecipeButtonDelete
-                  onClick={() =>
-                    handleShow(recipe._id, recipe.title, recipe.image_Id)
-                  }
-                >
-                  <BsFillTrashFill />
-                </RecipeButtonDelete>
-              </IconContext.Provider>
-            </RecipeButtonContainer>
-          </RecipeBody>
-        </RecipeCard>
+                <RecipeTextArea>
+                  <h4>Description:</h4>
+                  {recipe.description}
+                </RecipeTextArea>
+                <RecipeTextArea>
+                  <h4>Ingredients:</h4>
+                  {recipe.ingredients}
+                </RecipeTextArea>
+                <RecipeButtonContainer>
+                  <IconContext.Provider value={{ size: "2rem" }}>
+                    <RecipeButtonBack
+                      onClick={() => {
+                        goBack();
+                      }}
+                    >
+                      <BiArrowBack />
+                    </RecipeButtonBack>
+                    <RecipeButtonEdit to={`/recipes/${recipe._id}/edit`}>
+                      <AiTwotoneEdit />
+                    </RecipeButtonEdit>
+                    <RecipeButtonDelete
+                      onClick={() =>
+                        handleShow(recipe._id, recipe.title, recipe.image_Id)
+                      }
+                    >
+                      <BsFillTrashFill />
+                    </RecipeButtonDelete>
+                  </IconContext.Provider>
+                </RecipeButtonContainer>
+              </RecipeBody>
+            </RecipeCard>
+          </>
+        )}
       </RecipeContainer>
     </>
   );

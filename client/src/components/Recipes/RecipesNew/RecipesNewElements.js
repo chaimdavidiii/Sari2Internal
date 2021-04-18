@@ -18,8 +18,8 @@ export const Container = styled.div`
 export const LoaderContainer = styled.div`
   text-align: center;
   align-items: center;
-  margin-top: 200px;
-  color: #000000;
+  margin-top: 300px;
+  margin-bottom: 400px;
 `;
 
 export const Errors = styled.div`

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PulseLoader from "react-spinners/PulseLoader";
 import {
   Container,
   FormContent,
@@ -10,6 +11,7 @@ import {
   Form,
   FormLabel,
   FormButtonAdd,
+  LoaderContainer,
   FormButtonReset,
   FormButtonBack,
   Errors,
@@ -25,11 +27,13 @@ import { IconContext } from "react-icons";
 
 function EditRecipe() {
   const [recipe, setRecipe] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
   const [image_Id, setImage_Id] = useState("");
   const { register, handleSubmit, errors, reset } = useForm();
   const { id } = useParams();
   const history = useHistory();
+  const loaderColor = "#ff5500";
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/recipes/${id}`).then((response) => {
@@ -64,6 +68,7 @@ function EditRecipe() {
 
   const onSubmit = async (data) => {
     if (!previewSource) {
+      setLoading(true);
       await Axios.put("http://localhost:3001/recipes/update", {
         id: id,
         newTitle: data.title,
@@ -75,6 +80,7 @@ function EditRecipe() {
         }
       });
     } else {
+      setLoading(true);
       await Axios.put("http://localhost:3001/recipes/update", {
         image: previewSource,
         imageToDelete: image_Id,
@@ -93,93 +99,101 @@ function EditRecipe() {
   return (
     <>
       <Container>
-        <FormWrap>
-          <Icon to='/'>Edit '{recipe.title}'</Icon>
-          <FormContent>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <FormLabel>Image</FormLabel>
-              <FormInputFile
-                type='file'
-                name='image'
-                onChange={handleFileInputChange}
-              />
-              {previewSource && (
-                <img
-                  src={previewSource}
-                  alt='imagePreview'
-                  style={{ height: "100px" }}
+        {loading ? (
+          <LoaderContainer>
+            <PulseLoader color={loaderColor} loading={loading} size={120} />
+          </LoaderContainer>
+        ) : (
+          <FormWrap>
+            <Icon to='/'>Edit '{recipe.title}'</Icon>
+            <FormContent>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <FormLabel>Image</FormLabel>
+                <FormInputFile
+                  type='file'
+                  name='image'
+                  onChange={handleFileInputChange}
                 />
-              )}
-              <FormLabel htmlFor='for'>Title</FormLabel>
-              <FormInput
-                ref={register({
-                  required: true,
-                  minLength: 4,
-                })}
-                type='text'
-                name='title'
-                placeholder='Title..'
-                defaultValue={recipe.title}
-              />
-              {errors.title && errors.title.type === "required" && (
-                <Errors>Title is Required!</Errors>
-              )}
-              {errors.title && errors.title.type === "minLength" && (
-                <Errors>Must be more than 4 characters!</Errors>
-              )}
-
-              <FormLabel htmlFor='for'>Description</FormLabel>
-              <FormInputTextArea
-                rows={4}
-                ref={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                name='description'
-                as='textarea'
-                placeholder='Description..'
-                defaultValue={recipe.description}
-              ></FormInputTextArea>
-              {errors.description && errors.description.type === "required" && (
-                <Errors>Description is required!</Errors>
-              )}
-              {errors.description &&
-                errors.description.type === "minLength" && (
-                  <Errors>Must be more than 5 characters!</Errors>
+                {previewSource && (
+                  <img
+                    src={previewSource}
+                    alt='imagePreview'
+                    style={{ height: "100px" }}
+                  />
+                )}
+                <FormLabel htmlFor='for'>Title</FormLabel>
+                <FormInput
+                  ref={register({
+                    required: true,
+                    minLength: 4,
+                  })}
+                  type='text'
+                  name='title'
+                  placeholder='Title..'
+                  defaultValue={recipe.title}
+                />
+                {errors.title && errors.title.type === "required" && (
+                  <Errors>Title is Required!</Errors>
+                )}
+                {errors.title && errors.title.type === "minLength" && (
+                  <Errors>Must be more than 4 characters!</Errors>
                 )}
 
-              <FormLabel htmlFor='for'>Ingredients</FormLabel>
-              <FormInputTextArea
-                rows={4}
-                ref={register({
-                  required: true,
-                  minLength: 5,
-                })}
-                name='ingredients'
-                as='textarea'
-                placeholder='Ingredients..'
-                defaultValue={recipe.ingredients}
-              ></FormInputTextArea>
-              {errors.description && errors.description.type === "required" && (
-                <Errors>Ingredients field is required!</Errors>
-              )}
-              {errors.description &&
-                errors.description.type === "minLength" && (
-                  <Errors>Must be more than 5 characters!</Errors>
-                )}
-              <FormButtonWrap>
-                <IconContext.Provider value={{ size: "2rem" }}>
-                  <FormButtonAdd type='submit'>
-                    <AiOutlineSave />
-                  </FormButtonAdd>
-                  <FormButtonBack to={`/recipes/${recipe._id}`}>
-                    <BiArrowBack />
-                  </FormButtonBack>
-                </IconContext.Provider>
-              </FormButtonWrap>
-            </Form>
-          </FormContent>
-        </FormWrap>
+                <FormLabel htmlFor='for'>Description</FormLabel>
+                <FormInputTextArea
+                  rows={4}
+                  ref={register({
+                    required: true,
+                    minLength: 5,
+                  })}
+                  name='description'
+                  as='textarea'
+                  placeholder='Description..'
+                  defaultValue={recipe.description}
+                ></FormInputTextArea>
+                {errors.description &&
+                  errors.description.type === "required" && (
+                    <Errors>Description is required!</Errors>
+                  )}
+                {errors.description &&
+                  errors.description.type === "minLength" && (
+                    <Errors>Must be more than 5 characters!</Errors>
+                  )}
+
+                <FormLabel htmlFor='for'>Ingredients</FormLabel>
+                <FormInputTextArea
+                  rows={4}
+                  ref={register({
+                    required: true,
+                    minLength: 5,
+                  })}
+                  name='ingredients'
+                  as='textarea'
+                  placeholder='Ingredients..'
+                  defaultValue={recipe.ingredients}
+                ></FormInputTextArea>
+                {errors.description &&
+                  errors.description.type === "required" && (
+                    <Errors>Ingredients field is required!</Errors>
+                  )}
+                {errors.description &&
+                  errors.description.type === "minLength" && (
+                    <Errors>Must be more than 5 characters!</Errors>
+                  )}
+                <FormButtonWrap>
+                  <IconContext.Provider value={{ size: "2rem" }}>
+                    <FormButtonAdd type='submit'>
+                      <AiOutlineSave />
+                    </FormButtonAdd>
+                    <FormButtonBack to={`/recipes/${recipe._id}`}>
+                      <BiArrowBack />
+                    </FormButtonBack>
+                  </IconContext.Provider>
+                </FormButtonWrap>
+              </Form>
+            </FormContent>
+          </FormWrap>
+        )}
       </Container>
     </>
   );

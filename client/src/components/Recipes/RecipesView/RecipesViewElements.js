@@ -25,6 +25,11 @@ export const ModalContainer = styled.div`
   width: 100%;
 `;
 
+export const LoaderContainer = styled.div`
+  margin-top: 300px;
+  margin-bottom: 400px;
+`;
+
 export const SpanModal = styled.span`
   color: #ff0000;
 `;
@@ -34,7 +39,7 @@ export const RecipeModalButton = styled(Button)`
 `;
 
 export const RecipeCard = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-bottom: 20px;
   background: #ffffff;
 `;

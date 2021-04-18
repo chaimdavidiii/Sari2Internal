@@ -15,6 +15,12 @@ export const Container = styled.div`
   background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 100%);
 `;
 
+export const LoaderContainer = styled.div`
+  margin-top: 300px;
+  margin-bottom: 400px;
+  text-align: center;
+`;
+
 export const Errors = styled.div`
   color: #ff0000;
   margin-bottom: 16px;
@@ -28,6 +34,7 @@ export const SupLogo = styled.sup`
 `;
 
 export const FormWrap = styled.div`
+  margin-top: 80px;
   height: 90%;
   display: flex;
   flex-direction: column;
@@ -38,7 +45,7 @@ export const FormWrap = styled.div`
   }
 `;
 
-export const Icon = styled(Link)`
+export const Icon = styled.div`
   align-self: center;
   margin-left: 32px;
   margin-top: 32px;

@@ -44,10 +44,8 @@ const Navbar = ({ toggle }) => {
   useEffect(() => {
     if (location.pathname === "/") {
       window.addEventListener("scroll", changeNav);
-      console.log(location.pathname);
     } else {
       window.onload = navRecipe();
-      console.log(location.pathname);
     }
     return () => {
       navRecipe();
