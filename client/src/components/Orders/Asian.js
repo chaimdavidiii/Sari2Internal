@@ -15,6 +15,7 @@ import {
   OrdersP,
   OrdersDeleteButton,
 } from "./OrderElements";
+import Email from "./Email";
 
 const Asian = () => {
   const [asianList, setAsianList] = useState([]);
@@ -78,36 +79,39 @@ const Asian = () => {
             {asianList.length === 0 ? (
               <OrdersP>No orders Yet.</OrdersP>
             ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {asianList.map((val, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{key + 1}</td>
-                        <td>{val.item}</td>
-                        <td>{val.quantity}</td>
-                        <td>
-                          <OrdersDeleteButton
-                            onClick={() => {
-                              deleteAsianItem(val._id);
-                            }}
-                          >
-                            <BsFillTrashFill />
-                          </OrdersDeleteButton>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Item</th>
+                      <th>Quantity</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {asianList.map((val, key) => {
+                      return (
+                        <tr key={key}>
+                          <td>{key + 1}</td>
+                          <td>{val.item}</td>
+                          <td>{val.quantity}</td>
+                          <td>
+                            <OrdersDeleteButton
+                              onClick={() => {
+                                deleteAsianItem(val._id);
+                              }}
+                            >
+                              <BsFillTrashFill />
+                            </OrdersDeleteButton>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <Email section='Asian' />
+              </>
             )}
           </OrdersSection>
         </AsianArea>

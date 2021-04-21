@@ -3,7 +3,6 @@ import PulseLoader from "react-spinners/PulseLoader";
 import {
   Container,
   FormContent,
-  FormH1,
   FormInput,
   FormInputFile,
   FormWrap,
@@ -12,7 +11,6 @@ import {
   FormLabel,
   FormButtonAdd,
   LoaderContainer,
-  FormButtonReset,
   FormButtonBack,
   Errors,
   FormInputTextArea,
@@ -30,7 +28,7 @@ function EditRecipe() {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
   const [image_Id, setImage_Id] = useState("");
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const { id } = useParams();
   const history = useHistory();
   const loaderColor = "#ff5500";

@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const nodemailer = require("nodemailer");
 const app = express();
 require("dotenv").config();
 const RecipeModel = require("./models/Recipe");
@@ -9,6 +10,7 @@ const AsianModel = require("./models/Asian");
 const VeggiesModel = require("./models/Veggies");
 const cors = require("cors");
 const { cloudinary } = require("./utils/cloudinary");
+const { transporter } = require("./utils/nodemailer");
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
@@ -49,6 +51,126 @@ app.post("/orders/trents", async (req, res) => {
   try {
     await trents.save();
     res.send("success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// send email
+app.post("/orders/email", async (req, res) => {
+  const section = req.body.section;
+  console.log(section);
+
+  let trents = await TrentsModel.find({});
+  let trentsMessage = `<table>
+  <thead>
+    <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Quantity</th>
+    </tr>
+  </thead>
+    <tbody>
+      ${trents
+        .map((val, key) => {
+          return `<tr>
+            <td>${key + 1}.</td>
+            <td><strong>${val.item}</strong></td>
+            <td>${val.quantity}</td>
+          </tr>`;
+        })
+        .join("")}
+    </tbody>
+  </table>
+    `;
+
+  let asian = await AsianModel.find({});
+  let asianMessage = `<table>
+  <thead>
+    <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Quantity</th>
+    </tr>
+  </thead>
+    <tbody>
+      ${asian
+        .map((val, key) => {
+          return `<tr>
+            <td>${key + 1}.</td>
+            <td><strong>${val.item}</strong></td>
+            <td>${val.quantity}</td>
+          </tr>`;
+        })
+        .join("")}
+    </tbody>
+  </table>
+    `;
+
+  let meat = await MeatModel.find({});
+  let meatMessage = `<table>
+  <thead>
+    <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Quantity</th>
+    </tr>
+  </thead>
+    <tbody>
+      ${meat
+        .map((val, key) => {
+          return `<tr>
+            <td>${key + 1}.</td>
+            <td><strong>${val.item}</strong></td>
+            <td>${val.quantity}</td>
+          </tr>`;
+        })
+        .join("")}
+    </tbody>
+  </table>
+    `;
+
+  let veggies = await VeggiesModel.find({});
+  let veggiesMessage = `<table>
+  <thead>
+    <tr>
+        <th>#</th>
+        <th>Item</th>
+        <th>Quantity</th>
+    </tr>
+  </thead>
+    <tbody>
+      ${veggies
+        .map((val, key) => {
+          return `<tr>
+            <td>${key + 1}.</td>
+            <td><strong>${val.item}</strong></td>
+            <td>${val.quantity}</td>
+          </tr>`;
+        })
+        .join("")}
+    </tbody>
+  </table>
+    `;
+
+  let mailOptions = {
+    from: "Sari-sari Internal",
+    to: "chaimdavidiii@gmail.com",
+    subject: section,
+    html:
+      section === "Trents"
+        ? trentsMessage
+        : section === "Asian"
+        ? asianMessage
+        : section === "Meat"
+        ? meatMessage
+        : veggiesMessage,
+  };
+
+  try {
+    let sendMail = await transporter.sendMail(mailOptions);
+    res.send("success!");
+    console.log("email sent!");
   } catch (error) {
     console.log(error);
   }
