@@ -20,7 +20,7 @@ const Recipe = () => {
   const history = useHistory();
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/read").then((response) => {
+    Axios.get("http://localhost:3001/recipes").then((response) => {
       setRecipeList(response.data);
     });
   }, [recipeList]);

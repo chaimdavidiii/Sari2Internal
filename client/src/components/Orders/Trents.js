@@ -4,6 +4,7 @@ import Axios from "axios";
 import { BsFillTrashFill } from "react-icons/bs";
 import { GrFormAdd } from "react-icons/gr";
 import { IconContext } from "react-icons";
+import Email from "./Email";
 import {
   TrentsArea,
   OrdersSectionText,
@@ -15,7 +16,6 @@ import {
   OrdersP,
   OrdersDeleteButton,
 } from "./OrderElements";
-import Email from "./Email";
 
 const Trents = () => {
   const [trentsList, setTrentsList] = useState([]);
